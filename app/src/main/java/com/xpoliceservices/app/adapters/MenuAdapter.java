@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.xpoliceservices.app.DashBoardActivity;
 import com.xpoliceservices.app.R;
+import com.xpoliceservices.app.constents.AppConstents;
 
 import java.util.List;
 
@@ -44,6 +46,44 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
             super(itemView);
             tvItemName = itemView.findViewById(R.id.tvItemName);
             llChildItems = itemView.findViewById(R.id.llChildItems);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String title = tvItemName.getText().toString();
+                    switch (title){
+                        case AppConstents.CREATE_SERVICE:{
+                            break;
+                        }
+                        case AppConstents.SERVICES:{
+                            break;
+                        }
+                        case AppConstents.MY_PROFILE:{
+                            break;
+                        }
+                        case AppConstents.MY_SERVICES:{
+                            break;
+                        }
+                        case AppConstents.SERVICE_MAN_LIST:{
+                            break;
+                        }
+                        case AppConstents.CUSTOMER_LIST:{
+                            break;
+                        }
+                        case AppConstents.APPLICATION_LIST:{
+                            break;
+                        }
+                        case AppConstents.LOGOUT:{
+                            ((DashBoardActivity)itemView.getContext()).closeDrawer();
+                            ((DashBoardActivity) itemView.getContext()).showLogoutPopup();
+                            break;
+                        }
+                        default:{
+                            break;
+                        }
+                    }
+                }
+            });
         }
     }
 }

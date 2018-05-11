@@ -34,13 +34,13 @@
                 android:visibility="gone"/>
 
             <TextView
-                android:id="@+id/tvLoginType"
+                android:id="@+id/tvUserType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rect_bg"
                 android:drawablePadding="5dp"
-                android:drawableRight="@drawable/ic_down"
+                android:drawableRight="@drawable/ic_drop_down"
                 android:drawableTint="@color/colorPrimary"
                 android:hint="Select User Type"
                 android:padding="8dp"
@@ -116,6 +116,7 @@
             android:text="Skip Login"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone"/>
     </LinearLayout>
 </LinearLayout>

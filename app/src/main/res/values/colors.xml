@@ -5,7 +5,11 @@
     <color name="colorAccent">#FFE0B2</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="gray">#808080</color>
     <color name="colorHint">#999999</color>
     <color name="red">#990000</color>
     <color name="orange">#ec7205</color>
+    <color name="green">#5ec639</color>
+    <color name="lite_white">#EBEFF0</color>
+    <color name="light_blue">#aecdd8</color>
 </resources>
