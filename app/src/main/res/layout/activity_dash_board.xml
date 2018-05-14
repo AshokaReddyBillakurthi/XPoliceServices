@@ -79,9 +79,7 @@
             android:background="@color/colorPrimary"
             app:itemBackground="@color/colorPrimary"
             app:itemIconTint="@color/white"
-            app:itemTextColor="@color/white"
-            app:menu="@menu/bottom_navigation"
-            />
+            app:itemTextColor="@color/white"/>
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

@@ -45,8 +45,10 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        Intent intent = new Intent(SplashActivity.this,SyncDataService.class);
-        startService(intent);
+//        Intent intent = new Intent(SplashActivity.this,SyncDataService.class);
+//        startService(intent);
+
+        checkPermissions();
     }
 
     private void checkPermissions(){

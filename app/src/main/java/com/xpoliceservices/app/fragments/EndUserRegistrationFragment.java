@@ -43,7 +43,6 @@ public class EndUserRegistrationFragment extends BaseFragment {
     private ImageView ivCamera, ivUserImg;
     private static final int CAMERA_CAPTURE = 1;
     public static final String TAG = EndUserRegistrationFragment.class.getSimpleName();
-    private String userType = "";
     private CustomDialog customDialog;
     private List<DataModel.Division> divisionPoliceStationList;
     private List<DataModel.SubDivision> subDivisionList;
@@ -105,8 +104,8 @@ public class EndUserRegistrationFragment extends BaseFragment {
                                 @Override
                                 public void run() {
                                     customDialog = new CustomDialog(getContext(),
-                                            divisionPoliceStationList,"Select Sub Division",
-                                            true, true, true,
+                                            divisionPoliceStationList,"Select Division/Police Station",
+                                            true, false, true,
                                             new CustomDialog.OnDivisionPoliceStation() {
                                                 @Override
                                                 public void onDivisionPoliceStation(String divisionPoliceStation) {
@@ -284,7 +283,7 @@ public class EndUserRegistrationFragment extends BaseFragment {
                 user.city = "";
                 user.area = "";
                 user.userImg = ((BaseActivity)getContext()).userImg;
-                user.userType = userType;
+                user.userType = ((BaseActivity)getContext()).userType;
                 user.district = district;
                 user.subDivision = subDivision;
                 user.circlePolicestation = divisionPoliceStation;

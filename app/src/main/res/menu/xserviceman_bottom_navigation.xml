@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/navigation_applied_services"
+        android:icon="@drawable/ic_applied_services"
+        android:title="Assigned Services"/>
+
+    <item
+        android:id="@+id/navigation_filter"
+        android:icon="@drawable/ic_filter"
+        android:title="Filter"/>
+</menu>

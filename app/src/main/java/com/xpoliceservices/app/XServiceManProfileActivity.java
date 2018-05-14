@@ -15,7 +15,7 @@ import com.xpoliceservices.app.utils.PreferenceUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class XServiceManDetailsActivity extends BaseActivity {
+public class XServiceManProfileActivity extends BaseActivity {
 
     private TextView tvTitle, tvFirstName, tvLastName, tvArea,
             tvAccept, tvReject, tvDocList, tvCity, tvState,
@@ -29,7 +29,7 @@ public class XServiceManDetailsActivity extends BaseActivity {
 
     @Override
     public int getRootLayout() {
-        return R.layout.activity_xservice_man_details;
+        return R.layout.activity_xservice_man_profile;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class XServiceManDetailsActivity extends BaseActivity {
 
         @Override
         protected XServiceMan doInBackground(Void... voids) {
-            return XServiceManDataHelper.getXServiceManByEmailId(XServiceManDetailsActivity.this,
+            return XServiceManDataHelper.getXServiceManByEmailId(XServiceManProfileActivity.this,
                     PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
         }
 
@@ -153,7 +153,7 @@ public class XServiceManDetailsActivity extends BaseActivity {
 
         @Override
         protected Boolean doInBackground(XServiceMan... exServiceMEN) {
-            boolean isUpdated = XServiceManDataHelper.updateStatus(XServiceManDetailsActivity.this,
+            boolean isUpdated = XServiceManDataHelper.updateStatus(XServiceManProfileActivity.this,
                     exServiceMEN[0].state+"",exServiceMEN[0].email);
             return isUpdated;
         }
@@ -177,7 +177,7 @@ public class XServiceManDetailsActivity extends BaseActivity {
 
         @Override
         protected Boolean doInBackground(XServiceMan... exServiceMEN) {
-            boolean isUpdated = XServiceManDataHelper.updateUserActiveStatus(XServiceManDetailsActivity.this,
+            boolean isUpdated = XServiceManDataHelper.updateUserActiveStatus(XServiceManProfileActivity.this,
                     exServiceMEN[0].isActive+"",exServiceMEN[0].email);
             return isUpdated;
         }
