@@ -16,14 +16,14 @@ public class DataUtils {
             switch (loginType){
                 case AppConstents.LOGIN_ADMIN:
                     menuList.add(AppConstents.CREATE_SERVICE);
-                    menuList.add(AppConstents.SERVICE_MAN_LIST);
-                    menuList.add(AppConstents.CUSTOMER_LIST);
+//                    menuList.add(AppConstents.SERVICE_MAN_LIST);
+//                    menuList.add(AppConstents.CUSTOMER_LIST);
                     menuList.add(AppConstents.LOGOUT);
                     break;
                 case AppConstents.LOGIN_SERVICE_MAN:
-                    menuList.add(AppConstents.APPLICATION_LIST);
+//                    menuList.add(AppConstents.APPLICATION_LIST);
                     menuList.add(AppConstents.MY_PROFILE);
-                    menuList.add(AppConstents.CHAT);
+//                    menuList.add(AppConstents.CHAT);
                     menuList.add(AppConstents.LOGOUT);
                     break;
                 case AppConstents.LOGIN_CUSTOMER:

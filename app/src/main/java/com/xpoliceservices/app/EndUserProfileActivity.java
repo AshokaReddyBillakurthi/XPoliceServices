@@ -22,7 +22,6 @@ public class EndUserProfileActivity extends BaseActivity {
     private EndUser user;
     private String email;
 
-
     @Override
     public int getRootLayout() {
         return R.layout.activity_end_user_profile;

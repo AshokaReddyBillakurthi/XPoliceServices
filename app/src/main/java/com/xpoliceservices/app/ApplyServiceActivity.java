@@ -177,11 +177,11 @@ public class ApplyServiceActivity extends BaseActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
-            DialogUtils.showDialog(ApplyServiceActivity.this, "Applied Successful",
-                    AppConstents.FINISH, false);
-//            Intent intent = new Intent(ApplyServiceActivity.this,PaymentActivity.class);
-//            intent.putExtra(AppConstents.EXTRA_APPLICATION_TYPE,serviceType);
-//            startActivityForResult(intent,PAYMENT_CODE);
+//            DialogUtils.showDialog(ApplyServiceActivity.this, "Applied Successful",
+//                    AppConstents.FINISH, false);
+            Intent intent = new Intent(ApplyServiceActivity.this,PaymentActivity.class);
+            intent.putExtra(AppConstents.EXTRA_APPLICATION_TYPE,serviceType);
+            startActivityForResult(intent,PAYMENT_CODE);
         }
     }
 

@@ -24,17 +24,31 @@ import android.widget.Toast;
 
 import com.xpoliceservices.app.BaseActivity;
 import com.xpoliceservices.app.R;
+import com.xpoliceservices.app.RegistrationActivity;
 import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.custom.CustomDialog;
 import com.xpoliceservices.app.database.AppDataHelper;
 import com.xpoliceservices.app.database.XServiceManDataHelper;
 import com.xpoliceservices.app.model.DataModel;
 import com.xpoliceservices.app.model.XServiceMan;
+import com.xpoliceservices.app.utils.ApiServiceConstants;
 import com.xpoliceservices.app.utils.DialogUtils;
 import com.xpoliceservices.app.utils.FilePathUtils;
+import com.xpoliceservices.app.utils.OkHttpUtils;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class XServiceManRegistrationFragment extends BaseFragment {
 
@@ -89,7 +103,7 @@ public class XServiceManRegistrationFragment extends BaseFragment {
         cbxPIdAddressTrace = view.findViewById(R.id.cbxPIdAddressTrace);
         cbxMatrimonialVerifications = view.findViewById(R.id.cbxMatrimonialVerifications);
         cbxDraftingComplaints = view.findViewById(R.id.cbxDraftingComplaints);
-
+        docList = new ArrayList<>();
 
         tvDivisionPoliceStation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -469,6 +483,79 @@ public class XServiceManRegistrationFragment extends BaseFragment {
                 }
             }
         }
+    }
+
+
+    private boolean isPosted = false;
+    private boolean postDataToServer(XServiceMan exServiceMan) {
+        try {
+            OkHttpClient client = OkHttpUtils.getOkHttpClient();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("firstName", exServiceMan.firstName);
+            jsonObject.put("lastName", exServiceMan.lastName);
+            jsonObject.put("email", exServiceMan.email);
+            jsonObject.put("password", exServiceMan.password);
+            jsonObject.put("mobileNumber", exServiceMan.mobileNo);
+            jsonObject.put("exPoliceId",exServiceMan.exPoliceId);
+            jsonObject.put("isActive", true);
+            jsonObject.put("state", exServiceMan.state);
+            jsonObject.put("city", exServiceMan.city);
+            jsonObject.put("area", exServiceMan.area);
+            jsonObject.put("image", exServiceMan.userImg);
+            jsonObject.put("userType", exServiceMan.userType);
+//            JsonArray jsonElements = new JsonArray();
+//            jsonElements.add("license");
+//            jsonElements.add("crime");
+//            jsonObject.put("serviceAbility",jsonElements);
+            String body = jsonObject.toString();
+            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body);
+            Request.Builder builder = new Request.Builder();
+            builder.url(ApiServiceConstants.MAIN_URL + ApiServiceConstants.X_SERVICEMAN_REGISTRATION).addHeader("Content-Type", "application/json")
+                    .addHeader("cache-control", "no-cache")
+                    .post(requestBody);
+            Request request = builder.build();
+            client.newCall(request).enqueue(new  Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    ((BaseActivity)getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            isPosted = false;
+                            Toast.makeText(getContext(), R.string.error_message, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    final String body = response.body().string().toString();
+                    ((BaseActivity)getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                if (response.message().equalsIgnoreCase("OK")) {
+                                    isPosted = true;
+//                                    JSONObject jsonObj = new JSONObject(body);
+//                                    String message = jsonObj.getString("msg");
+//                                    DialogUtils.showDialog(UserRegistrationActivity.this,message.toString(),AppConstents.FINISH,false);
+//                                    Toast.makeText(UserRegistrationActivity.this,message.toString(),Toast.LENGTH_LONG).show();
+                                } else {
+                                    isPosted = false;
+//                                    Toast.makeText(UserRegistrationActivity.this,R.string.error_message,Toast.LENGTH_LONG).show();
+                                    DialogUtils.showDialog(getContext(), getResources().getString(R.string.error_message), AppConstents.FINISH, false);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        boolean isValid = isPosted;
+        return isValid;
     }
 
 }

@@ -38,7 +38,7 @@ public class XServiceManProfileActivity extends BaseActivity {
             exServiceMan = (XServiceMan) getIntent().getExtras()
                     .getSerializable(AppConstents.EXTRA_USER);
             userType = getIntent().getExtras()
-                    .getString(AppConstents.EXTRA_LOGIN_TYPE, "");
+                    .getString(AppConstents.EXTRA_USER_TYPE, "");
 
             isFromMyProfile = getIntent().getExtras()
                     .getBoolean(AppConstents.EXTRA_ISFROM_MYPROFILE,false);
@@ -134,27 +134,13 @@ public class XServiceManProfileActivity extends BaseActivity {
         }
     }
 
-//    private class IsXServiceManIsActive extends AsyncTask<Void,Void,Boolean>{
-//
-//        @Override
-//        protected Boolean doInBackground(Void... voids) {
-//            return XServiceManDataHelper.isXserviceManActive(ExServiceManDetailsActivity.this,
-//                    SharedPreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Boolean aBoolean) {
-//            super.onPostExecute(aBoolean);
-//
-//        }
-//    }
 
     private class UpdateExserviceManStatus extends AsyncTask<XServiceMan, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(XServiceMan... exServiceMEN) {
             boolean isUpdated = XServiceManDataHelper.updateStatus(XServiceManProfileActivity.this,
-                    exServiceMEN[0].state+"",exServiceMEN[0].email);
+                    exServiceMEN[0].status+"",exServiceMEN[0].email);
             return isUpdated;
         }
 

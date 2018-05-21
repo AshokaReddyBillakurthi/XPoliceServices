@@ -57,7 +57,7 @@ public class ApplicationDataHelper {
             SQLiteDatabase sqLiteDatabase = DatabaseHelper.getInstance(context).getWritableDatabase();
             String selectQuery = "Select firstName,lastName,email,mobileNo,state,city,area," +
                     "district,subDivision,circlePolicestation,userImg,applicationType," +
-                    " status,isAccepted,xServiceManEmail,payableAmount from tblApplications ";
+                    " status,isAccepted,xServiceManEmail,payableAmount,date,applicationNo from tblApplications ";
 
             Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
             if(null!=cursor&&cursor.moveToFirst()){
@@ -79,6 +79,8 @@ public class ApplicationDataHelper {
                     application.isAccepted =Integer.parseInt(cursor.getString(13));
                     application.xServiceManEmail = cursor.getString(14);
                     application.payableAmount = Double.parseDouble(cursor.getString(15));
+                    application.data = cursor.getString(16);
+                    application.applicationNo = cursor.getString(17);
                     applicationList.add(application);
 
                 }while (cursor.moveToNext());
@@ -175,7 +177,7 @@ public class ApplicationDataHelper {
             SQLiteDatabase sqLiteDatabase = DatabaseHelper.getInstance(context).getWritableDatabase();
             String selectQuery = "Select firstName,lastName,email,mobileNo,state,city,area," +
                     "district,subDivision,circlePolicestation,userImg,applicationType," +
-                    " status,isAccepted,xServiceManEmail,payableAmount,date from tblApplications " +
+                    " status,isAccepted,xServiceManEmail,payableAmount,date,applicationNo from tblApplications " +
                     " Where email = '"+email+"' ";
 
             Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
@@ -199,6 +201,7 @@ public class ApplicationDataHelper {
                     application.xServiceManEmail = cursor.getString(14);
                     application.payableAmount = Double.parseDouble(cursor.getString(15));
                     application.data = cursor.getString(16);
+                    application.applicationNo = cursor.getString(17);
                     applicationList.add(application);
 
                 }while (cursor.moveToNext());
@@ -208,5 +211,30 @@ public class ApplicationDataHelper {
             e.printStackTrace();
         }
         return applicationList;
+    }
+
+    public static boolean assignApplicationToXServiceMan(Context context,String emailid,String applicationNo){
+        SQLiteDatabase sqLiteDatabase = null;
+        boolean isUpdated = false;
+        try{
+            sqLiteDatabase = DatabaseHelper.getInstance(context).getWritableDatabase();
+            String updateQuery = "Update tblApplications set xServiceManEmail='"+emailid+"'" +
+                    " Where applicationNo ='"+applicationNo+"'";
+            SQLiteStatement updateStmt = sqLiteDatabase.compileStatement(updateQuery);
+            int count = updateStmt.executeUpdateDelete();
+            if(count>0)
+                isUpdated = true;
+
+            if(null != updateStmt)
+                updateStmt.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if(null!=sqLiteDatabase&&sqLiteDatabase.isOpen())
+                sqLiteDatabase.close();
+        }
+        return isUpdated;
     }
 }

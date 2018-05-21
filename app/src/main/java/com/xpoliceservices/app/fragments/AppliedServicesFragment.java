@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xpoliceservices.app.BaseActivity;
+import com.xpoliceservices.app.DashBoardActivity;
 import com.xpoliceservices.app.R;
 import com.xpoliceservices.app.adapters.ApplicationsListAdapter;
 import com.xpoliceservices.app.constents.AppConstents;
@@ -42,6 +44,8 @@ public class AppliedServicesFragment extends BaseFragment{
         applicationsListAdapter = new ApplicationsListAdapter();
         rvApplications.setAdapter(applicationsListAdapter);
 
+        ((DashBoardActivity)getContext()).tvScreenTitle.setText("Applied Services");
+
         new GetApplicationsAsyncTask().execute();
     }
 
@@ -49,8 +53,16 @@ public class AppliedServicesFragment extends BaseFragment{
 
         @Override
         protected List<Application> doInBackground(String... strings) {
-            return ApplicationDataHelper.getAllApplicationsByEmailId(getContext(),
-                    PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
+            if(((BaseActivity)getContext()).userType.equalsIgnoreCase(AppConstents.USER_TYPE_ADMIN)){
+                return ApplicationDataHelper.getAllApplications(getContext());
+            }
+            else if(((BaseActivity)getContext()).userType.equalsIgnoreCase(AppConstents.USER_TYPE_SERVICEMAN)){
+                return ApplicationDataHelper.getAllApplications(getContext());
+            }
+            else{
+                return ApplicationDataHelper.getAllApplicationsByEmailId(getContext(),
+                        PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
+            }
         }
 
         @Override

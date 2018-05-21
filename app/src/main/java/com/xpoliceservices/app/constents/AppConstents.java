@@ -6,7 +6,7 @@ public interface AppConstents {
     String IS_LOGGEDIN = "IS_LOGGEDIN";
     String USER_TYPE = "USER_TYPE";
     String LOGIN_ADMIN = "Admin";
-    String LOGIN_SERVICE_MAN = "XService Man";
+    String LOGIN_SERVICE_MAN = "ServiceMan";
     String LOGIN_CUSTOMER = "Customer";
     String CREATE_SERVICE_MAN = "Create Service Man";
     String CREATE_SERVICE = "Create Service";

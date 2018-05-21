@@ -1,5 +1,6 @@
 package com.xpoliceservices.app;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,12 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.xpoliceservices.app.adapters.MenuAdapter;
 import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.fragments.AppliedServicesFragment;
+import com.xpoliceservices.app.fragments.FilterFragment;
 import com.xpoliceservices.app.fragments.HomeFragment;
 import com.xpoliceservices.app.fragments.ServicesFragment;
 import com.xpoliceservices.app.fragments.XServiceMansListFragment;
@@ -23,16 +26,20 @@ import com.xpoliceservices.app.utils.DataUtils;
 import com.xpoliceservices.app.utils.DialogUtils;
 
 import java.util.List;
+import java.util.Stack;
 
 public class DashBoardActivity extends BaseActivity {
 
     private DrawerLayout drawer;
     private LinearLayout llMenu;
     private RecyclerView rvMenuList;
+    public TextView tvScreenTitle;
     private MenuAdapter menuAdapter;
     private List<String> menuList;
     private BottomNavigationView bottomNavigationView;
     private Fragment fragment;
+    public Stack<Fragment> fragmentStack = null;
+    private boolean doubleBackToExitPressedOnce = false;
 
 
     @Override
@@ -49,12 +56,14 @@ public class DashBoardActivity extends BaseActivity {
         drawer = findViewById(R.id.drawer);
         llMenu = findViewById(R.id.llMenu);
         bottomNavigationView = findViewById(R.id.navigation);
+        tvScreenTitle = findViewById(R.id.tvScreenTitle);
         rvMenuList = findViewById(R.id.rvMenuList);
         rvMenuList.setLayoutManager(new LinearLayoutManager(DashBoardActivity.this));
         menuList = DataUtils.getMenuList(userType);
         menuAdapter = new MenuAdapter(menuList);
         rvMenuList.setAdapter(menuAdapter);
 
+        fragmentStack = new Stack<>();
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer,
                 null, R.string.drawer_open, R.string.drawer_close) {
@@ -113,7 +122,7 @@ public class DashBoardActivity extends BaseActivity {
                         fragment = new XServiceMansListFragment();
                         break;
                     case R.id.navigation_filter:
-                        fragment = new ServicesFragment();
+                        fragment = new FilterFragment();
                         break;
                     default:
                         break;
@@ -139,6 +148,7 @@ public class DashBoardActivity extends BaseActivity {
                     .setCustomAnimations(R.anim.slide_up_in, R.anim.slide_up_out)
                     .replace(R.id.container, fragment)
                     .commit();
+            fragmentStack.add(fragment);
             return true;
         }
         return false;
@@ -152,5 +162,48 @@ public class DashBoardActivity extends BaseActivity {
     public void showLogoutPopup(){
         DialogUtils.showDialog(DashBoardActivity.this,"Do you want to Logout?",
                 AppConstents.LOGOUT,true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (null!=fragmentStack&&!fragmentStack.isEmpty()&&fragmentStack.size()>1) {
+            Fragment fragment = fragmentStack.pop();
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            Fragment frag = fragmentStack.peek();
+            if(frag instanceof HomeFragment){
+                bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+            }
+            else if(frag instanceof AppliedServicesFragment){
+                bottomNavigationView.setSelectedItemId(R.id.navigation_applied_services);
+            }
+            else if(frag instanceof ServicesFragment){
+                bottomNavigationView.setSelectedItemId(R.id.navigation_services);
+            }
+            else if(frag instanceof XServiceMansListFragment){
+                bottomNavigationView.setSelectedItemId(R.id.navigation_xserviceman);
+            }
+            else if(frag instanceof FilterFragment){
+                bottomNavigationView.setSelectedItemId(R.id.navigation_filter);
+            }
+            else{
+                loadFragment(frag);
+            }
+            fragmentStack.pop();
+        }
+        else{
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            showToast("Press back again to exit");
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        }
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xpoliceservices.app.DashBoardActivity;
 import com.xpoliceservices.app.R;
 
 public class HomeFragment extends BaseFragment{
@@ -20,5 +21,7 @@ public class HomeFragment extends BaseFragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        ((DashBoardActivity)getContext()).tvScreenTitle.setText("Home");
     }
 }

@@ -260,7 +260,7 @@ public class XServiceManDataHelper {
             String selectQuery = "Select firstName,lastName,email,mobileNo," +
                     "state,city,area,district,subDivision,circlePolicestation," +
                     "userImg,userType,services,reqDocs,status,isActive from tblXServiceMans"
-                    + " Where circlePolicestation = '"+division+"'";
+                    + " Where circlePolicestation LIKE '%"+division+"%'";
 
             Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
 
