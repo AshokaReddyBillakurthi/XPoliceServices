@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.xpoliceservices.app.adapters.SubServicesAdapter;
 import com.xpoliceservices.app.constents.AppConstents;
@@ -20,6 +21,7 @@ public class SubServicesActivity extends BaseActivity {
 
     private RecyclerView rvSubSevices;
     private SubServicesAdapter subServicesAdapter;
+    private TextView tvTitle;
     private List<String> listSubServices;
     private List<String> tempSearchList;
     private String serviceType = "";
@@ -38,6 +40,7 @@ public class SubServicesActivity extends BaseActivity {
         }
         rvSubSevices = findViewById(R.id.rvSubSevices);
         rvSubSevices.setLayoutManager(new LinearLayoutManager(SubServicesActivity.this));
+        tvTitle = findViewById(R.id.tvTitle);
         ivCross = findViewById(R.id.ivCross);
         ivBack = findViewById(R.id.ivBack);
         edtSearch = findViewById(R.id.edtSearch);
@@ -49,6 +52,8 @@ public class SubServicesActivity extends BaseActivity {
         listSubServices = DataUtils.getSubServices(serviceType);
         subServicesAdapter = new SubServicesAdapter(listSubServices);
         rvSubSevices.setAdapter(subServicesAdapter);
+
+        tvTitle.setText("Services");
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
 import com.xpoliceservices.app.BaseActivity;
 import com.xpoliceservices.app.R;
 import com.xpoliceservices.app.RegistrationActivity;
@@ -339,8 +340,8 @@ public class XServiceManRegistrationFragment extends BaseFragment {
                 exServiceMan.password = password;
                 exServiceMan.mobileNo = mobileNo;
                 exServiceMan.state = state;
-                exServiceMan.city = "";
-                exServiceMan.area = "";
+                exServiceMan.city = "city";
+                exServiceMan.area = "area";
                 exServiceMan.isActive = 1;
                 exServiceMan.userType = ((BaseActivity)getContext()).userType;
                 exServiceMan.userImg = ((BaseActivity)getContext()).userImg;
@@ -355,12 +356,12 @@ public class XServiceManRegistrationFragment extends BaseFragment {
                 exServiceMan.district = district;
                 exServiceMan.subDivision = subDivision;
                 exServiceMan.circlePolicestation = divisionPoliceStation;
-//                if(postDataToServer(exServiceMan)){
-//                    showToast("Successfully Inserted");
-//                }
-//                else{
-//                    showToast("Insertion Failed");
-//                }
+                if(postDataToServer(exServiceMan)){
+                    ((BaseActivity)getContext()).showToast("Successfully Inserted");
+                }
+                else{
+                    ((BaseActivity)getContext()).showToast("Insertion Failed");
+                }
                 arrayList.add(exServiceMan);
                 new ExServiceManRegistrationAsyncTask().execute(arrayList);
             }
@@ -503,10 +504,13 @@ public class XServiceManRegistrationFragment extends BaseFragment {
             jsonObject.put("area", exServiceMan.area);
             jsonObject.put("image", exServiceMan.userImg);
             jsonObject.put("userType", exServiceMan.userType);
-//            JsonArray jsonElements = new JsonArray();
+            jsonObject.put("district",exServiceMan.district);
+            jsonObject.put("subDivision",exServiceMan.subDivision);
+            jsonObject.put("divisionPoliceStation",exServiceMan.circlePolicestation);
+//            List<String> jsonElements = new ArrayList<>();
 //            jsonElements.add("license");
 //            jsonElements.add("crime");
-//            jsonObject.put("serviceAbility",jsonElements);
+            jsonObject.put("services",exServiceMan.services);
             String body = jsonObject.toString();
             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body);
             Request.Builder builder = new Request.Builder();

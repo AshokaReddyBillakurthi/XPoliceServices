@@ -50,9 +50,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="@dimen/dimen_10dp"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="17sp"
                         android:textStyle="bold" />

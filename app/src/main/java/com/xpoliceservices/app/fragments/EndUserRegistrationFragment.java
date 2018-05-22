@@ -302,16 +302,16 @@ public class EndUserRegistrationFragment extends BaseFragment {
                 user.district = district;
                 user.subDivision = subDivision;
                 user.circlePolicestation = divisionPoliceStation;
-//                if(postDataToServer(user)){
-////                    arrayList.add(user);
-////                    new UserAsyncTask().execute(arrayList);
-//                    showToast("Data posted Successfully");
-//                }
-//                else{
-//                    showToast("Failed");
-//                }
-                arrayList.add(user);
-                new UserAsyncTask().execute(arrayList);
+                if(postDataToServer(user)){
+                    arrayList.add(user);
+                    new UserAsyncTask().execute(arrayList);
+                    ((BaseActivity)getContext()).showToast("Data posted Successfully");
+                }
+                else{
+                    ((BaseActivity)getContext()).showToast("Failed");
+                }
+//                arrayList.add(user);
+//                new UserAsyncTask().execute(arrayList);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -420,10 +420,13 @@ public class EndUserRegistrationFragment extends BaseFragment {
             jsonObject.put("mobileNumber", user.mobileNo);
             jsonObject.put("isActive", true);
             jsonObject.put("state", user.state);
-            jsonObject.put("city", user.city);
-            jsonObject.put("area", user.area);
+            jsonObject.put("city", "city");
+            jsonObject.put("area", "area");
             jsonObject.put("image", user.userImg);
             jsonObject.put("userType", user.userType);
+            jsonObject.put("district",user.district);
+            jsonObject.put("subDivision",user.subDivision);
+            jsonObject.put("divisionPoliceStation",user.circlePolicestation);
             String body = jsonObject.toString();
             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body);
             Request.Builder builder = new Request.Builder();
