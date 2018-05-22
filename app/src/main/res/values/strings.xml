@@ -2,6 +2,8 @@
     <string name="app_name">XPoliceServices</string>
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
     <string name="termsandconditions"><u>Terms &amp; Conditions</u></string>
+    <string name="apply_proceed_pay">Apply &amp; Proceed To Pay</string>
+    <string name="error_message">Oops! Something went wrong</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="termsandconditions_text">Welcome to our website. If you continue to browse and use this

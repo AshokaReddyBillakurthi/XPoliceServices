@@ -6,7 +6,7 @@ public interface AppConstents {
     String IS_LOGGEDIN = "IS_LOGGEDIN";
     String USER_TYPE = "USER_TYPE";
     String LOGIN_ADMIN = "Admin";
-    String LOGIN_SERVICE_MAN = "XService Man";
+    String LOGIN_SERVICE_MAN = "ServiceMan";
     String LOGIN_CUSTOMER = "Customer";
     String CREATE_SERVICE_MAN = "Create Service Man";
     String CREATE_SERVICE = "Create Service";
@@ -50,4 +50,30 @@ public interface AppConstents {
     String EXTRA_EMAIL_ID = "Email_Id";
     String EXTRA_SERVICE_TYPE = "SERVICE_TYPE";
     String EXTRA_ISFROM_MYPROFILE = "ISFROM_MYPROFILE";
+
+    //Services
+    String POLICE_PERMISSIONS = "Police Permissions";
+    String MATRIMONIAL_VERIFICATIONS = "Matrimonial Verifications";
+    String DRAFTING_COMPLAINTS = "Drafting & Complaints";
+    String POLICE_IDENTITY_ADDRESS_TRACE = "Persons Identity & Address Verifications ";
+
+    //Sub Services
+    String GUN_LICENCES = "Gun licences";
+    String INTERNET_CAFES = "Internet cafes";
+    String SNOOKERS_PARLOURS = "Snookers parlours";
+    String PARKING_PLACES = "Parking places";
+    String EVENTS_FUNCTIONS_MIKES = "Events/Functions/Mikes";
+    String LODGES_HOTELS = "Lodges/Hotels";
+    String FILM_TV_SHOOTINGS = "Film/ Tv shootings";
+    String POLICE_BB_FOR_PVT_FUNCTIONS = "Police BB for Pvt functions";
+    String MARTIMONIAL_VERIFICATION = "Matrimonial Verification";
+    String IMARTIMONIAL_ISSUES = "Imatrimonial Issues";
+    String CRIME_REPORT = "Crime Report";
+    String NOCS = "Nocs";
+    String LICENCES_RENEWALS = "Licences/Renewals";
+    String CERTIFIED_COPIES = "Certified Copies";
+    String RTI_AND_APPEALS_TO_HIGHER_UPS = "Rti and Appeals to Higher Ups";
+    String PHONE_ADDRESSES = "Phone Addresses";
+    String ADDHAR_ID_PROOFS = "Addhar or Any Id Proofs";
+    String DECLARED_AND_STATED_ADDRESS = "Declared And Stated Address";
 }

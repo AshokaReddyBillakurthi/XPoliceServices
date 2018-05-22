@@ -15,7 +15,7 @@ import com.xpoliceservices.app.utils.PreferenceUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class XServiceManDetailsActivity extends BaseActivity {
+public class XServiceManProfileActivity extends BaseActivity {
 
     private TextView tvTitle, tvFirstName, tvLastName, tvArea,
             tvAccept, tvReject, tvDocList, tvCity, tvState,
@@ -29,7 +29,7 @@ public class XServiceManDetailsActivity extends BaseActivity {
 
     @Override
     public int getRootLayout() {
-        return R.layout.activity_xservice_man_details;
+        return R.layout.activity_xservice_man_profile;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class XServiceManDetailsActivity extends BaseActivity {
             exServiceMan = (XServiceMan) getIntent().getExtras()
                     .getSerializable(AppConstents.EXTRA_USER);
             userType = getIntent().getExtras()
-                    .getString(AppConstents.EXTRA_LOGIN_TYPE, "");
+                    .getString(AppConstents.EXTRA_USER_TYPE, "");
 
             isFromMyProfile = getIntent().getExtras()
                     .getBoolean(AppConstents.EXTRA_ISFROM_MYPROFILE,false);
@@ -120,7 +120,7 @@ public class XServiceManDetailsActivity extends BaseActivity {
 
         @Override
         protected XServiceMan doInBackground(Void... voids) {
-            return XServiceManDataHelper.getXServiceManByEmailId(XServiceManDetailsActivity.this,
+            return XServiceManDataHelper.getXServiceManByEmailId(XServiceManProfileActivity.this,
                     PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
         }
 
@@ -134,27 +134,13 @@ public class XServiceManDetailsActivity extends BaseActivity {
         }
     }
 
-//    private class IsXServiceManIsActive extends AsyncTask<Void,Void,Boolean>{
-//
-//        @Override
-//        protected Boolean doInBackground(Void... voids) {
-//            return XServiceManDataHelper.isXserviceManActive(ExServiceManDetailsActivity.this,
-//                    SharedPreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Boolean aBoolean) {
-//            super.onPostExecute(aBoolean);
-//
-//        }
-//    }
 
     private class UpdateExserviceManStatus extends AsyncTask<XServiceMan, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(XServiceMan... exServiceMEN) {
-            boolean isUpdated = XServiceManDataHelper.updateStatus(XServiceManDetailsActivity.this,
-                    exServiceMEN[0].state+"",exServiceMEN[0].email);
+            boolean isUpdated = XServiceManDataHelper.updateStatus(XServiceManProfileActivity.this,
+                    exServiceMEN[0].status+"",exServiceMEN[0].email);
             return isUpdated;
         }
 
@@ -177,7 +163,7 @@ public class XServiceManDetailsActivity extends BaseActivity {
 
         @Override
         protected Boolean doInBackground(XServiceMan... exServiceMEN) {
-            boolean isUpdated = XServiceManDataHelper.updateUserActiveStatus(XServiceManDetailsActivity.this,
+            boolean isUpdated = XServiceManDataHelper.updateUserActiveStatus(XServiceManProfileActivity.this,
                     exServiceMEN[0].isActive+"",exServiceMEN[0].email);
             return isUpdated;
         }

@@ -105,7 +105,7 @@ public class LoginActivity extends BaseActivity {
     public void showUserTypeDialog() {
         final Dialog dialog = new Dialog(LoginActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.setContentView(R.layout.layout_user_type);
 
         TextView tvAdmin = dialog.findViewById(R.id.tvAdmin);

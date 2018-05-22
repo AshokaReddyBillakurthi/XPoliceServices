@@ -12,34 +12,36 @@ import java.util.List;
 
 public class ApplicationDataHelper {
 
-    public static void insertApplicationData(Context context, ArrayList<Application> applicationList){
+    public static void insertApplicationData(Context context, List<Application> applicationList){
         try{
             SQLiteDatabase sqLiteDatabase = DatabaseHelper.getInstance(context).getWritableDatabase();
 
-            String insertQuery = "Insert into tblApplications(firstName,lastName,email,mobileNo,state,city,area," +
+            String insertQuery = "Insert into tblApplications(applicationNo,firstName,lastName,email,mobileNo,state,city,area," +
                     "district,subDivision,circlePolicestation,userImg,applicationType," +
-                    "status,isAccepted,xServiceManEmail,payableAmount) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    "status,isAccepted,xServiceManEmail,payableAmount,date) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             SQLiteStatement insertStmt = sqLiteDatabase.compileStatement(insertQuery);
 
             if(null!= applicationList&&!applicationList.isEmpty()){
                 for(Application application: applicationList){
-                    insertStmt.bindString(1,application.firstName);
-                    insertStmt.bindString(2,application.lastName);
-                    insertStmt.bindString(3,application.email);
-                    insertStmt.bindString(4,application.mobileNo);
-                    insertStmt.bindString(5,application.state);
-                    insertStmt.bindString(6,application.city);
-                    insertStmt.bindString(7,application.area);
-                    insertStmt.bindString(8,application.district);
-                    insertStmt.bindString(9,application.subDivision);
-                    insertStmt.bindString(10,application.circlePolicestation);
-                    insertStmt.bindString(11,application.userImg);
-                    insertStmt.bindString(12,application.applicationType);
-                    insertStmt.bindString(13,application.status+"");
-                    insertStmt.bindString(14,application.isAccepted+"");
-                    insertStmt.bindString(15,application.xServiceManEmail);
-                    insertStmt.bindString(16,application.payableAmount+"");
+                    insertStmt.bindString(1,application.applicationNo);
+                    insertStmt.bindString(2,application.firstName);
+                    insertStmt.bindString(3,application.lastName);
+                    insertStmt.bindString(4,application.email);
+                    insertStmt.bindString(5,application.mobileNo);
+                    insertStmt.bindString(6,application.state);
+                    insertStmt.bindString(7,application.city);
+                    insertStmt.bindString(8,application.area);
+                    insertStmt.bindString(9,application.district);
+                    insertStmt.bindString(10,application.subDivision);
+                    insertStmt.bindString(11,application.circlePolicestation);
+                    insertStmt.bindString(12,application.userImg);
+                    insertStmt.bindString(13,application.applicationType);
+                    insertStmt.bindString(14,application.status+"");
+                    insertStmt.bindString(15,application.isAccepted+"");
+                    insertStmt.bindString(16,application.xServiceManEmail);
+                    insertStmt.bindString(17,application.payableAmount+"");
+                    insertStmt.bindString(18,application.data+"");
                     insertStmt.executeInsert();
                 }
             }
@@ -55,7 +57,7 @@ public class ApplicationDataHelper {
             SQLiteDatabase sqLiteDatabase = DatabaseHelper.getInstance(context).getWritableDatabase();
             String selectQuery = "Select firstName,lastName,email,mobileNo,state,city,area," +
                     "district,subDivision,circlePolicestation,userImg,applicationType," +
-                    " status,isAccepted,xServiceManEmail,payableAmount from tblApplications ";
+                    " status,isAccepted,xServiceManEmail,payableAmount,date,applicationNo from tblApplications ";
 
             Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
             if(null!=cursor&&cursor.moveToFirst()){
@@ -77,6 +79,8 @@ public class ApplicationDataHelper {
                     application.isAccepted =Integer.parseInt(cursor.getString(13));
                     application.xServiceManEmail = cursor.getString(14);
                     application.payableAmount = Double.parseDouble(cursor.getString(15));
+                    application.data = cursor.getString(16);
+                    application.applicationNo = cursor.getString(17);
                     applicationList.add(application);
 
                 }while (cursor.moveToNext());
@@ -173,7 +177,7 @@ public class ApplicationDataHelper {
             SQLiteDatabase sqLiteDatabase = DatabaseHelper.getInstance(context).getWritableDatabase();
             String selectQuery = "Select firstName,lastName,email,mobileNo,state,city,area," +
                     "district,subDivision,circlePolicestation,userImg,applicationType," +
-                    " status,isAccepted,xServiceManEmail,payableAmount from tblApplications " +
+                    " status,isAccepted,xServiceManEmail,payableAmount,date,applicationNo from tblApplications " +
                     " Where email = '"+email+"' ";
 
             Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
@@ -196,6 +200,8 @@ public class ApplicationDataHelper {
                     application.isAccepted =Integer.parseInt(cursor.getString(13));
                     application.xServiceManEmail = cursor.getString(14);
                     application.payableAmount = Double.parseDouble(cursor.getString(15));
+                    application.data = cursor.getString(16);
+                    application.applicationNo = cursor.getString(17);
                     applicationList.add(application);
 
                 }while (cursor.moveToNext());
@@ -205,5 +211,30 @@ public class ApplicationDataHelper {
             e.printStackTrace();
         }
         return applicationList;
+    }
+
+    public static boolean assignApplicationToXServiceMan(Context context,String emailid,String applicationNo){
+        SQLiteDatabase sqLiteDatabase = null;
+        boolean isUpdated = false;
+        try{
+            sqLiteDatabase = DatabaseHelper.getInstance(context).getWritableDatabase();
+            String updateQuery = "Update tblApplications set xServiceManEmail='"+emailid+"'" +
+                    " Where applicationNo ='"+applicationNo+"'";
+            SQLiteStatement updateStmt = sqLiteDatabase.compileStatement(updateQuery);
+            int count = updateStmt.executeUpdateDelete();
+            if(count>0)
+                isUpdated = true;
+
+            if(null != updateStmt)
+                updateStmt.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if(null!=sqLiteDatabase&&sqLiteDatabase.isOpen())
+                sqLiteDatabase.close();
+        }
+        return isUpdated;
     }
 }

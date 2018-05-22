@@ -41,6 +41,7 @@ public class ApplicationsListAdapter extends RecyclerView.Adapter<ApplicationsLi
         holder.tvFullName.setText(applicationList.get(position).firstName + " " + applicationList.get(position).lastName);
         holder.tvApplicationName.setText(applicationList.get(position).applicationType + "");
         holder.tvDivisionPoliceStation.setText(applicationList.get(position).circlePolicestation + "");
+        holder.tvDate.setText(applicationList.get(position).data+"");
 
         if (applicationList.get(position).status == 0) {
             holder.tvStatus.setText(AppConstents.PENDING);
@@ -78,7 +79,8 @@ public class ApplicationsListAdapter extends RecyclerView.Adapter<ApplicationsLi
     class ApplicationViewHolder extends RecyclerView.ViewHolder {
 
         // ImageView ivApplicantImg,ivMessage;
-        TextView tvFullName, tvApplicationName, tvStatus, tvDivisionPoliceStation;//tvEmail,tvMobileNo,tvApplicationType,
+        TextView tvFullName, tvApplicationName,
+                tvStatus, tvDivisionPoliceStation,tvDate;//tvEmail,tvMobileNo,tvApplicationType,
         // tvArea;
 
         public ApplicationViewHolder(View itemView) {
@@ -87,6 +89,7 @@ public class ApplicationsListAdapter extends RecyclerView.Adapter<ApplicationsLi
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvApplicationName = itemView.findViewById(R.id.tvApplicationName);
             tvDivisionPoliceStation = itemView.findViewById(R.id.tvDivisionPoliceStation);
+            tvDate = itemView.findViewById(R.id.tvDate);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

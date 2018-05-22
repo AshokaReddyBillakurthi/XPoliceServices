@@ -1,5 +1,6 @@
 package com.xpoliceservices.app.adapters;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xpoliceservices.app.DashBoardActivity;
+import com.xpoliceservices.app.EndUserProfileActivity;
 import com.xpoliceservices.app.R;
+import com.xpoliceservices.app.XServiceManProfileActivity;
 import com.xpoliceservices.app.constents.AppConstents;
+import com.xpoliceservices.app.utils.PreferenceUtils;
 
 import java.util.List;
 
@@ -59,6 +63,21 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                             break;
                         }
                         case AppConstents.MY_PROFILE:{
+                            ((DashBoardActivity)itemView.getContext()).closeDrawer();
+                            if(PreferenceUtils.getStringValue(AppConstents.USER_TYPE)
+                                    .equalsIgnoreCase(AppConstents.USER_TYPE_CUSTOMER)){
+                                Intent intent = new Intent(itemView.getContext(), EndUserProfileActivity.class);
+                                intent.putExtra(AppConstents.EXTRA_EMAIL_ID,
+                                        PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
+                                itemView.getContext().startActivity(intent);
+                            }
+                            else if(PreferenceUtils.getStringValue(AppConstents.USER_TYPE)
+                                    .equalsIgnoreCase(AppConstents.USER_TYPE_SERVICEMAN)){
+                                Intent intent = new Intent(itemView.getContext(), XServiceManProfileActivity.class);
+                                intent.putExtra(AppConstents.EXTRA_EMAIL_ID,
+                                        PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
+                                itemView.getContext().startActivity(intent);
+                            }
                             break;
                         }
                         case AppConstents.MY_SERVICES:{

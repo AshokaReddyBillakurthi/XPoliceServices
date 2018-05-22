@@ -47,6 +47,8 @@ public class SplashActivity extends BaseActivity {
     public void initData() {
         Intent intent = new Intent(SplashActivity.this,SyncDataService.class);
         startService(intent);
+
+//        checkPermissions();
     }
 
     private void checkPermissions(){

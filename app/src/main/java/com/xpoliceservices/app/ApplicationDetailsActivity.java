@@ -1,16 +1,24 @@
 package com.xpoliceservices.app;
 
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.xpoliceservices.app.adapters.AssignXServiceManAdapter;
 import com.xpoliceservices.app.constents.AppConstents;
+import com.xpoliceservices.app.database.ApplicationDataHelper;
 import com.xpoliceservices.app.database.XServiceManDataHelper;
 import com.xpoliceservices.app.model.Application;
 import com.xpoliceservices.app.model.XServiceMan;
+import com.xpoliceservices.app.utils.DialogUtils;
 
 import java.util.List;
 
@@ -22,6 +30,7 @@ public class ApplicationDetailsActivity extends BaseActivity {
     private ImageView ivBack,ivUserImage;
     private Application application;
     private LinearLayout llAssign;
+    private String applicationNo="";
 
     @Override
     public int getRootLayout() {
@@ -56,6 +65,7 @@ public class ApplicationDetailsActivity extends BaseActivity {
     @Override
     public void initData() {
         if(null!=application){
+            applicationNo = application.applicationNo;
             tvFullName.setText(application.firstName+"");
             tvOccupation.setText(application.lastName+"");
             tvEmail.setText(application.email+"");
@@ -78,6 +88,13 @@ public class ApplicationDetailsActivity extends BaseActivity {
             Bitmap bitmap = getUserImageBitMap(application.userImg);
             if(bitmap!=null){
                 ivUserImage.setImageBitmap(bitmap);
+            }
+
+            if(TextUtils.isEmpty(application.xServiceManEmail)){
+                llAssign.setVisibility(View.VISIBLE);
+            }
+            else{
+                llAssign.setVisibility(View.GONE);
             }
         }
 
@@ -104,8 +121,45 @@ public class ApplicationDetailsActivity extends BaseActivity {
         protected void onPostExecute(List<XServiceMan> exServiceMEN) {
             super.onPostExecute(exServiceMEN);
             if(null!=exServiceMEN){
-
+                showAssignXserviceManDialog(exServiceMEN);
             }
+        }
+    }
+
+    public void showAssignXserviceManDialog(List<XServiceMan> xServiceManList) {
+        final Dialog dialog = new Dialog(ApplicationDetailsActivity.this);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_assign_xserviceman);
+        RecyclerView rvXserviceMans = dialog.findViewById(R.id.rvXserviceMans);
+        rvXserviceMans.setLayoutManager(new LinearLayoutManager(ApplicationDetailsActivity.this));
+        AssignXServiceManAdapter assignXServiceManAdapter = new AssignXServiceManAdapter(xServiceManList,
+                new AssignXServiceManAdapter.OnXServiceManSelectListener() {
+            @Override
+            public void onXServiceManSelect(XServiceMan xServiceMan) {
+                new ServiceAssignAsyncTask().execute(xServiceMan.email);
+                dialog.dismiss();
+            }
+        });
+        rvXserviceMans.setAdapter(assignXServiceManAdapter);
+        dialog.show();
+    }
+
+    class ServiceAssignAsyncTask extends AsyncTask<String,Void,Boolean>{
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            return ApplicationDataHelper.assignApplicationToXServiceMan(
+                    ApplicationDetailsActivity.this, strings[0],applicationNo);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(aBoolean)
+                 DialogUtils.showDialog(ApplicationDetailsActivity.this,"Application Assigned Successfully",
+                    AppConstents.FINISH,true);
         }
     }
 }

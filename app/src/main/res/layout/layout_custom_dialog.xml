@@ -40,7 +40,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <View
             android:layout_width="match_parent"
@@ -54,7 +54,7 @@
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             android:layout_margin="5dp"
-            android:background="@drawable/rect_bg"
+            android:background="@color/colorPrimary"
             android:text="Ok"
             android:textSize="16sp"
             android:textStyle="bold" />

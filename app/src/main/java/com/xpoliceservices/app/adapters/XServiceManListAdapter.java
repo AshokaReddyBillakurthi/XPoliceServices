@@ -1,6 +1,7 @@
 package com.xpoliceservices.app.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
@@ -10,19 +11,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.xpoliceservices.app.BaseActivity;
 import com.xpoliceservices.app.R;
+import com.xpoliceservices.app.XServiceManProfileActivity;
+import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.model.XServiceMan;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExServiceManListAdapter  extends RecyclerView.Adapter<ExServiceManListAdapter.ExServiceManViewHolder> {
+public class XServiceManListAdapter extends RecyclerView.Adapter<XServiceManListAdapter.ExServiceManViewHolder> {
 
     private List<XServiceMan> listExServiceMan;
     private Context mContext;
 
-    public ExServiceManListAdapter(Context mContext) {
+    public XServiceManListAdapter(Context mContext) {
         this.listExServiceMan = new ArrayList<>();
         this.mContext = mContext;
     }
@@ -49,11 +53,6 @@ public class ExServiceManListAdapter  extends RecyclerView.Adapter<ExServiceManL
             holder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.red));
         }
 
-//        holder.tvEmail.setText(listExServiceMan.get(position).email + "");
-//        holder.tvMobileNumber.setText(listExServiceMan.get(position).mobileNo + "");
-//
-//        holder.tvCity.setText(listExServiceMan.get(position).subDivision+"");
-//        holder.tvState.setText(listExServiceMan.get(position).state+"");
         getImageOfServiceMan(listExServiceMan.get(position).userImg, holder.ivServiceManImg);
     }
 
@@ -69,7 +68,7 @@ public class ExServiceManListAdapter  extends RecyclerView.Adapter<ExServiceManL
 
     class ExServiceManViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvFullName, tvDivisionPoliceStation, tvStatus;// tvEmail, tvMobileNumber,tvArea,tvCity,tvState;
+        TextView tvFullName, tvDivisionPoliceStation, tvStatus;
         ImageView ivServiceManImg;
 
         public ExServiceManViewHolder(final View itemView) {
@@ -77,22 +76,16 @@ public class ExServiceManListAdapter  extends RecyclerView.Adapter<ExServiceManL
             tvFullName = itemView.findViewById(R.id.tvFullName);
             tvDivisionPoliceStation = itemView.findViewById(R.id.tvDivisionPoliceStation);
             tvStatus = itemView.findViewById(R.id.tvStatus);
-//            tvEmail = itemView.findViewById(R.id.tvEmail);
-//            tvMobileNumber = itemView.findViewById(R.id.tvMobileNumber);
-//            ivServiceManImg = itemView.findViewById(R.id.ivServiceManImg);
-//            tvArea = itemView.findViewById(R.id.tvArea);
-//            tvCity = itemView.findViewById(R.id.tvCity);
-//            tvState = itemView.findViewById(R.id.tvState);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(mContext, ExServiceManDetailsActivity.class);
-//                    intent.putExtra(AppConstents.EXTRA_USER, listExServiceMan.get(getAdapterPosition()));
-//                    intent.putExtra(AppConstents.EXTRA_LOGIN_TYPE, ((BaseActivity) (itemView.getContext())).loginType);
-//                    mContext.startActivity(intent);
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, XServiceManProfileActivity.class);
+                    intent.putExtra(AppConstents.EXTRA_USER, listExServiceMan.get(getAdapterPosition()));
+                    intent.putExtra(AppConstents.EXTRA_USER_TYPE, ((BaseActivity) (itemView.getContext())).userType);
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 
