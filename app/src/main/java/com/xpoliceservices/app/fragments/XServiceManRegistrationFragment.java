@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonArray;
 import com.xpoliceservices.app.BaseActivity;
 import com.xpoliceservices.app.R;
 import com.xpoliceservices.app.RegistrationActivity;
@@ -31,7 +30,7 @@ import com.xpoliceservices.app.custom.CustomDialog;
 import com.xpoliceservices.app.database.AppDataHelper;
 import com.xpoliceservices.app.database.XServiceManDataHelper;
 import com.xpoliceservices.app.model.DataModel;
-import com.xpoliceservices.app.model.XServiceMan;
+import com.xpoliceservices.app.model.XServiceManData;
 import com.xpoliceservices.app.utils.ApiServiceConstants;
 import com.xpoliceservices.app.utils.DialogUtils;
 import com.xpoliceservices.app.utils.FilePathUtils;
@@ -332,19 +331,19 @@ public class XServiceManRegistrationFragment extends BaseFragment {
             }
             if (validateData(firstName, lastName, exPoliceId, mobileNo, email, password,
                     state, district, subDivision,divisionPoliceStation)) {
-                ArrayList<XServiceMan> arrayList = new ArrayList<>();
-                XServiceMan exServiceMan = new XServiceMan();
+                ArrayList<XServiceManData.XServiceman> arrayList = new ArrayList<>();
+                XServiceManData.XServiceman exServiceMan = new XServiceManData.XServiceman();
                 exServiceMan.firstName = firstName;
                 exServiceMan.lastName = lastName;
                 exServiceMan.email = email;
                 exServiceMan.password = password;
-                exServiceMan.mobileNo = mobileNo;
+                exServiceMan.mobileNumber = mobileNo;
                 exServiceMan.state = state;
                 exServiceMan.city = "city";
                 exServiceMan.area = "area";
-                exServiceMan.isActive = 1;
+                exServiceMan.isActive = true;
                 exServiceMan.userType = ((BaseActivity)getContext()).userType;
-                exServiceMan.userImg = ((BaseActivity)getContext()).userImg;
+                exServiceMan.image = ((BaseActivity)getContext()).userImg;
                 exServiceMan.status = 0;
                 if (docList != null && docList.size() > 0) {
                     for (String str : docList) {
@@ -355,7 +354,7 @@ public class XServiceManRegistrationFragment extends BaseFragment {
                 exServiceMan.services = strServices.toString();
                 exServiceMan.district = district;
                 exServiceMan.subDivision = subDivision;
-                exServiceMan.circlePolicestation = divisionPoliceStation;
+                exServiceMan.divisionPoliceStation = divisionPoliceStation;
                 if(postDataToServer(exServiceMan)){
                     ((BaseActivity)getContext()).showToast("Successfully Inserted");
                 }
@@ -396,10 +395,10 @@ public class XServiceManRegistrationFragment extends BaseFragment {
         } else if (!(Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
             ((BaseActivity)getContext()).showToast("Please enter valid email id");
             isValid = false;
-        } else if (TextUtils.isEmpty(password)) {
+        }/* else if (TextUtils.isEmpty(password)) {
             ((BaseActivity)getContext()).showToast("Please enter password");
             isValid = false;
-        } else if (TextUtils.isEmpty(state)) {
+        }*/ else if (TextUtils.isEmpty(state)) {
             ((BaseActivity)getContext()).showToast("Please select state");
             isValid = false;
         } else if (TextUtils.isEmpty(district)) {
@@ -418,7 +417,7 @@ public class XServiceManRegistrationFragment extends BaseFragment {
         return isValid;
     }
 
-    class ExServiceManRegistrationAsyncTask extends AsyncTask<ArrayList<XServiceMan>, Integer, Boolean> {
+    class ExServiceManRegistrationAsyncTask extends AsyncTask<ArrayList<XServiceManData.XServiceman>, Integer, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -431,7 +430,7 @@ public class XServiceManRegistrationFragment extends BaseFragment {
         }
 
         @Override
-        protected Boolean doInBackground(ArrayList<XServiceMan>[] arrayLists) {
+        protected Boolean doInBackground(ArrayList<XServiceManData.XServiceman>[] arrayLists) {
             XServiceManDataHelper.insertXserviceManData(getContext(),arrayLists[0]);
             return true;
         }
@@ -488,28 +487,26 @@ public class XServiceManRegistrationFragment extends BaseFragment {
 
 
     private boolean isPosted = false;
-    private boolean postDataToServer(XServiceMan exServiceMan) {
+    private boolean postDataToServer(XServiceManData.XServiceman exServiceMan) {
         try {
             OkHttpClient client = OkHttpUtils.getOkHttpClient();
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("firstName", exServiceMan.firstName);
             jsonObject.put("lastName", exServiceMan.lastName);
             jsonObject.put("email", exServiceMan.email);
-            jsonObject.put("password", exServiceMan.password);
-            jsonObject.put("mobileNumber", exServiceMan.mobileNo);
+            jsonObject.put("password",AppConstents.PASSWORD);
+            jsonObject.put("mobileNumber", exServiceMan.mobileNumber);
             jsonObject.put("exPoliceId",exServiceMan.exPoliceId);
             jsonObject.put("isActive", true);
             jsonObject.put("state", exServiceMan.state);
             jsonObject.put("city", exServiceMan.city);
             jsonObject.put("area", exServiceMan.area);
-            jsonObject.put("image", exServiceMan.userImg);
+            jsonObject.put("image", exServiceMan.image);
             jsonObject.put("userType", exServiceMan.userType);
             jsonObject.put("district",exServiceMan.district);
             jsonObject.put("subDivision",exServiceMan.subDivision);
-            jsonObject.put("divisionPoliceStation",exServiceMan.circlePolicestation);
-//            List<String> jsonElements = new ArrayList<>();
-//            jsonElements.add("license");
-//            jsonElements.add("crime");
+            jsonObject.put("divisionPoliceStation",exServiceMan.divisionPoliceStation);
+            jsonObject.put("reqDocs",exServiceMan.reqDocs);
             jsonObject.put("services",exServiceMan.services);
             String body = jsonObject.toString();
             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body);
@@ -521,7 +518,7 @@ public class XServiceManRegistrationFragment extends BaseFragment {
             client.newCall(request).enqueue(new  Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    ((BaseActivity)getContext()).runOnUiThread(new Runnable() {
+                    ((RegistrationActivity)getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             isPosted = false;
@@ -533,7 +530,7 @@ public class XServiceManRegistrationFragment extends BaseFragment {
                 @Override
                 public void onResponse(Call call, final Response response) throws IOException {
                     final String body = response.body().string().toString();
-                    ((BaseActivity)getContext()).runOnUiThread(new Runnable() {
+                    ((RegistrationActivity)getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             try {

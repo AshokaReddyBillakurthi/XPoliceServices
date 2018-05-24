@@ -293,16 +293,17 @@ public class EndUserRegistrationFragment extends BaseFragment {
                 user.lastName = lastName;
                 user.email = email;
                 user.password = password;
-                user.mobileNo = mobileNo;
+                user.mobileNumber = mobileNo;
                 user.state = state;
                 user.city = "";
                 user.area = "";
-                user.userImg = ((BaseActivity)getContext()).userImg;
+                user.image = ((BaseActivity)getContext()).userImg;
                 user.userType = ((BaseActivity)getContext()).userType;
                 user.district = district;
                 user.subDivision = subDivision;
-                user.circlePolicestation = divisionPoliceStation;
-                if(postDataToServer(user)){
+                user.divisionPoliceStation = divisionPoliceStation;
+                postDataToServer(user);
+                if(isPosted){
                     arrayList.add(user);
                     new UserAsyncTask().execute(arrayList);
                     ((BaseActivity)getContext()).showToast("Data posted Successfully");
@@ -409,7 +410,7 @@ public class EndUserRegistrationFragment extends BaseFragment {
         }
     }
 
-    private boolean postDataToServer(EndUser user) {
+    private void postDataToServer(EndUser user) {
         try {
             OkHttpClient client = OkHttpUtils.getOkHttpClient();
             JSONObject jsonObject = new JSONObject();
@@ -417,20 +418,21 @@ public class EndUserRegistrationFragment extends BaseFragment {
             jsonObject.put("lastName", user.lastName);
             jsonObject.put("email", user.email);
             jsonObject.put("password", user.password);
-            jsonObject.put("mobileNumber", user.mobileNo);
+            jsonObject.put("mobileNumber", user.mobileNumber);
             jsonObject.put("isActive", true);
             jsonObject.put("state", user.state);
             jsonObject.put("city", "city");
             jsonObject.put("area", "area");
-            jsonObject.put("image", user.userImg);
+            jsonObject.put("image", user.image);
             jsonObject.put("userType", user.userType);
             jsonObject.put("district",user.district);
             jsonObject.put("subDivision",user.subDivision);
-            jsonObject.put("divisionPoliceStation",user.circlePolicestation);
+            jsonObject.put("divisionPoliceStation",user.divisionPoliceStation);
             String body = jsonObject.toString();
             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body);
             Request.Builder builder = new Request.Builder();
-            builder.url(ApiServiceConstants.MAIN_URL + ApiServiceConstants.USER_REGISTRATION).addHeader("Content-Type", "application/json")
+            builder.url(ApiServiceConstants.MAIN_URL + ApiServiceConstants.USER_REGISTRATION)
+                    .addHeader("Content-Type", "application/json")
                     .addHeader("cache-control", "no-cache")
                     .post(requestBody);
             Request request = builder.build();
@@ -474,7 +476,5 @@ public class EndUserRegistrationFragment extends BaseFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        boolean isValid = isPosted;
-        return isValid;
     }
 }

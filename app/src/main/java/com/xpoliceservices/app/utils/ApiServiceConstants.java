@@ -12,10 +12,19 @@ public interface ApiServiceConstants {
     String MAIN_URL = "http://192.168.1.29:8080/PoliceService";
     String USER_REGISTRATION = "/registercustomer";
     String X_SERVICEMAN_REGISTRATION = "/registerExServicMan";
-    String USER_LOGIN = "/login?";
+    String CUSTOMER_LOGIN = "/customerLogin";
+    String SERVICEMAN_LOGIN = "/serviceManLogin";
+    String UPDATE_PASSWORD = "/updatePassword";
+    String UPDATE_XSERVICEMAN_PASSWORD = "/updateServiceManPassword";
+    String SAVE_APPLICATION = "/saveApplication?";
+    String GET_APPLICATIONS = "/getApplicataions?";
+    String GET_XSERVICEMAN = "/getexservicemen?";
+    String CUSTOMER_PROFILE = "/customerprofile?";
+    String XSERVICEMAN_PROFILE  = "/servicemanprofile?";
+    String UPDATE_XSERVICEMAN_STATUS = "/updateservicemanstatus?";
     String GEO_DATA = "/geodata";
-    String STATES = "/getStates";
-    String DISTRICTS = "/getDistricts";
-    String SUB_DIVISIONS = "/getSubDivisions";
-    String DIVISION = "/getDivisions";
+//    String STATES = "/getStates";
+//    String DISTRICTS = "/getDistricts";
+//    String SUB_DIVISIONS = "/getSubDivisions";
+//    String DIVISION = "/getDivisions";
 }

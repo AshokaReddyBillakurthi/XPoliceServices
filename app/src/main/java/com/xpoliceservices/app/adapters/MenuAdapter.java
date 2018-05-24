@@ -76,6 +76,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                                 Intent intent = new Intent(itemView.getContext(), XServiceManProfileActivity.class);
                                 intent.putExtra(AppConstents.EXTRA_EMAIL_ID,
                                         PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
+                                intent.putExtra(AppConstents.EXTRA_ISFROM_MYPROFILE,
+                                        true);
                                 itemView.getContext().startActivity(intent);
                             }
                             break;

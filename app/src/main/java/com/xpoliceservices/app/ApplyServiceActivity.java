@@ -17,16 +17,29 @@ import com.xpoliceservices.app.adapters.ServiceInstructionsAdapter;
 import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.database.ApplicationDataHelper;
 import com.xpoliceservices.app.database.EndUserDataHelper;
-import com.xpoliceservices.app.model.Application;
+import com.xpoliceservices.app.model.ApplicationData;
 import com.xpoliceservices.app.model.EndUser;
+import com.xpoliceservices.app.utils.ApiServiceConstants;
 import com.xpoliceservices.app.utils.CalenderUtils;
 import com.xpoliceservices.app.utils.DataUtils;
 import com.xpoliceservices.app.utils.DialogUtils;
+import com.xpoliceservices.app.utils.OkHttpUtils;
 import com.xpoliceservices.app.utils.PreferenceUtils;
 
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ApplyServiceActivity extends BaseActivity {
 
@@ -41,7 +54,8 @@ public class ApplyServiceActivity extends BaseActivity {
     private String serviceType = "";
     private List<String> listServiceInstructions;
     private EndUser user;
-    private List<Application> listApplication;
+    private List<ApplicationData.Application> listApplication;
+    private boolean isPosted;
 
     @Override
     public int getRootLayout() {
@@ -104,26 +118,26 @@ public class ApplyServiceActivity extends BaseActivity {
                 if(isValidData()&&null!=user) {
                     listApplication = new ArrayList<>();
                     String uniqueID = UUID.randomUUID().toString();
-                    Application application = new Application();
-                    application.applicationNo = uniqueID;
+                    ApplicationData.Application application = new ApplicationData.Application();
+                    application.applicationNumber = uniqueID;
                     application.firstName = user.firstName;
                     application.lastName = user.lastName;
                     application.applicationType = serviceType;
-                    application.mobileNo = user.mobileNo;
+                    application.mobileNumber = user.mobileNumber;
                     application.email = user.email;
                     application.area = user.area;
                     application.city = user.city;
                     application.state = user.state;
                     application.district = user.district;
                     application.subDivision = user.subDivision;
-                    application.circlePolicestation = user.circlePolicestation;
+                    application.applicationType = serviceType;
+                    application.circlePolicestation = user.divisionPoliceStation;
                     application.status = 0;
                     application.data = CalenderUtils.getCurrentDate();
                     if(cbxTermsAndConditions.isChecked())
-                        application.isAccepted = 1;
-                    application.userImg = userImg;
-                    listApplication.add(application);
-                    new SendApplicationAsyncTask().execute(listApplication);
+                        application.accepted = true;
+                    application.userImage = userImg;
+                    postDataToServer(application);
                 }
             }
         });
@@ -166,10 +180,10 @@ public class ApplyServiceActivity extends BaseActivity {
     }
 
 
-    class SendApplicationAsyncTask extends AsyncTask<List<Application>,Void,Boolean> {
+    class SendApplicationAsyncTask extends AsyncTask<List<ApplicationData.Application>,Void,Boolean> {
 
         @Override
-        protected Boolean doInBackground(List<Application>[] arrayLists) {
+        protected Boolean doInBackground(List<ApplicationData.Application>[] arrayLists) {
             ApplicationDataHelper.insertApplicationData(ApplyServiceActivity.this,arrayLists[0]);
             return true;
         }
@@ -223,5 +237,74 @@ public class ApplyServiceActivity extends BaseActivity {
                 DialogUtils.showDialog(ApplyServiceActivity.this, "Payment Failed, Please try again after sometime.", AppConstents.FINISH, false);
             }
         }
+    }
+
+
+    private boolean  postDataToServer(final ApplicationData.Application application) {
+        try {
+            OkHttpClient client = OkHttpUtils.getOkHttpClient();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("applicationNumber", application.applicationNumber);
+            jsonObject.put("firstName", application.firstName);
+            jsonObject.put("lastName", application.lastName);
+            jsonObject.put("email", application.email);
+            jsonObject.put("mobileNumber", application.mobileNumber);
+            jsonObject.put("state", application.state);
+            jsonObject.put("city", "city");
+            jsonObject.put( "area", "area");
+            jsonObject.put("userImage", application.userImage);
+            jsonObject.put("district",application.district);
+            jsonObject.put("subDivision",application.subDivision);
+            jsonObject.put("applicationType",application.applicationType);
+            jsonObject.put("circlePolicestation",application.circlePolicestation);
+            jsonObject.put("isAccepted",false);
+            jsonObject.put("payableAmount",application.payableAmount);
+            jsonObject.put("xserviceManEmail",application.xserviceManEmail);
+            jsonObject.put("data",application.data+"");
+            String body = jsonObject.toString();
+            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body);
+            Request.Builder builder = new Request.Builder();
+            builder.url(ApiServiceConstants.MAIN_URL + ApiServiceConstants.SAVE_APPLICATION)
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("cache-control", "no-cache")
+                    .post(requestBody);
+            Request request = builder.build();
+            client.newCall(request).enqueue(new  Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            isPosted = false;
+                            showToast(getString( R.string.error_message));
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    final String body = response.body().string().toString();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                if (body.equalsIgnoreCase("success")) {
+                                    listApplication.add(application);
+                                    new SendApplicationAsyncTask().execute(listApplication);
+                                } else {
+                                    isPosted = false;
+                                    showToast(getString( R.string.error_message));
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isPosted;
     }
 }

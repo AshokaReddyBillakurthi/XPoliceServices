@@ -31,14 +31,14 @@ public class EndUserDataHelper {
                     insertStmt.bindString(2,user.lastName);
                     insertStmt.bindString(3,user.email);
                     insertStmt.bindString(4,user.password);
-                    insertStmt.bindString(5,user.mobileNo);
+                    insertStmt.bindString(5,user.mobileNumber);
                     insertStmt.bindString(6,user.state);
                     insertStmt.bindString(7,user.city);
                     insertStmt.bindString(8,user.area);
                     insertStmt.bindString(9,user.district);
                     insertStmt.bindString(10,user.subDivision);
-                    insertStmt.bindString(11,user.circlePolicestation);
-                    insertStmt.bindString(12,user.userImg);
+                    insertStmt.bindString(11,user.divisionPoliceStation);
+                    insertStmt.bindString(12,user.image);
                     insertStmt.bindString(13,user.userType);
                     insertStmt.executeInsert();
                 }
@@ -95,14 +95,14 @@ public class EndUserDataHelper {
                     user.firstName  = cursor.getString(0);
                     user.lastName = cursor.getString(1);
                     user.email = cursor.getString(2);
-                    user.mobileNo = cursor.getString(3);
+                    user.mobileNumber = cursor.getString(3);
                     user.state = cursor.getString(4);
                     user.city = cursor.getString(5);
                     user.area = cursor.getString(6);
                     user.district = cursor.getString(7);
                     user.subDivision = cursor.getString(8);
-                    user.circlePolicestation = cursor.getString(9);
-                    user.userImg = cursor.getString(10);
+                    user.divisionPoliceStation = cursor.getString(9);
+                    user.image = cursor.getString(10);
                     user.userType = cursor.getString(11);
                     userList.add(user);
 
@@ -134,14 +134,14 @@ public class EndUserDataHelper {
                     user.firstName = cursor.getString(0);
                     user.lastName = cursor.getString(1);
                     user.email = cursor.getString(2);
-                    user.mobileNo = cursor.getString(3);
+                    user.mobileNumber = cursor.getString(3);
                     user.state = cursor.getString(4);
                     user.city = cursor.getString(5);
                     user.area = cursor.getString(6);
                     user.district = cursor.getString(7);
                     user.subDivision = cursor.getString(8);
-                    user.circlePolicestation = cursor.getString(9);
-                    user.userImg = cursor.getString(10);
+                    user.divisionPoliceStation = cursor.getString(9);
+                    user.image = cursor.getString(10);
                     user.userType = cursor.getString(11);
 
                 }while (cursor.moveToNext());

@@ -8,12 +8,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.google.gson.Gson;
 import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.database.XServiceManDataHelper;
-import com.xpoliceservices.app.model.XServiceMan;
+import com.xpoliceservices.app.model.XServiceManData;
+import com.xpoliceservices.app.utils.ApiServiceConstants;
+import com.xpoliceservices.app.utils.OkHttpUtils;
 import com.xpoliceservices.app.utils.PreferenceUtils;
 
+import java.io.IOException;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class XServiceManProfileActivity extends BaseActivity {
 
@@ -22,7 +32,7 @@ public class XServiceManProfileActivity extends BaseActivity {
             tvEmail, tvMobileNo, tvServices;
     private ImageView ivBack;
     private CircleImageView ivUserImage;
-    private XServiceMan exServiceMan;
+    private XServiceManData.XServiceman exServiceMan;
     private ToggleButton tbActive;
     private LinearLayout llActions;
     private boolean isFromMyProfile = false;
@@ -35,7 +45,7 @@ public class XServiceManProfileActivity extends BaseActivity {
     @Override
     public void initGUI() {
         if (null!=getIntent().getExtras()) {
-            exServiceMan = (XServiceMan) getIntent().getExtras()
+            exServiceMan = (XServiceManData.XServiceman) getIntent().getExtras()
                     .getSerializable(AppConstents.EXTRA_USER);
             userType = getIntent().getExtras()
                     .getString(AppConstents.EXTRA_USER_TYPE, "");
@@ -71,7 +81,8 @@ public class XServiceManProfileActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 exServiceMan.status = 1;
-                new UpdateExserviceManStatus().execute(exServiceMan);
+//                new UpdateExserviceManStatus().execute(exServiceMan);
+                updateXServiceManStatus(exServiceMan);
             }
         });
 
@@ -79,7 +90,8 @@ public class XServiceManProfileActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 exServiceMan.status = -1;
-                new UpdateExserviceManStatus().execute(exServiceMan);
+//                new UpdateExserviceManStatus().execute(exServiceMan);
+                updateXServiceManStatus(exServiceMan);
             }
         });
 
@@ -88,11 +100,11 @@ public class XServiceManProfileActivity extends BaseActivity {
             public void onClick(View v) {
                 if(!tbActive.isChecked()){
                     tbActive.setChecked(false);
-                    exServiceMan.isActive = 0;
+                    exServiceMan.isActive = false;
                 }
                 else{
                     tbActive.setChecked(true);
-                    exServiceMan.isActive = 1;
+                    exServiceMan.isActive = true;
                 }
                 new UpdateExserviceManActive().execute(exServiceMan);
             }
@@ -110,35 +122,35 @@ public class XServiceManProfileActivity extends BaseActivity {
     @Override
     public void initData() {
         if(null!=exServiceMan)
-            setXServiceManData();
+            setXServiceManData(exServiceMan);
         else{
-            new GetExserviceManDetails().execute();
+//            new GetExserviceManDetails().execute();
+            getMyProfileFromServer(PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
         }
     }
 
-    private class GetExserviceManDetails extends AsyncTask<Void,Void,XServiceMan> {
+    private class GetExserviceManDetails extends AsyncTask<Void,Void,XServiceManData.XServiceman> {
 
         @Override
-        protected XServiceMan doInBackground(Void... voids) {
+        protected XServiceManData.XServiceman doInBackground(Void... voids) {
             return XServiceManDataHelper.getXServiceManByEmailId(XServiceManProfileActivity.this,
                     PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
         }
 
         @Override
-        protected void onPostExecute(XServiceMan xServiceMan) {
+        protected void onPostExecute(XServiceManData.XServiceman xServiceMan) {
             super.onPostExecute(xServiceMan);
             if(null!=xServiceMan) {
-                exServiceMan = xServiceMan;
-                setXServiceManData();
+                setXServiceManData(xServiceMan);
             }
         }
     }
 
 
-    private class UpdateExserviceManStatus extends AsyncTask<XServiceMan, Void, Boolean> {
+    private class UpdateExserviceManStatus extends AsyncTask<XServiceManData.XServiceman, Void, Boolean> {
 
         @Override
-        protected Boolean doInBackground(XServiceMan... exServiceMEN) {
+        protected Boolean doInBackground(XServiceManData.XServiceman... exServiceMEN) {
             boolean isUpdated = XServiceManDataHelper.updateStatus(XServiceManProfileActivity.this,
                     exServiceMEN[0].status+"",exServiceMEN[0].email);
             return isUpdated;
@@ -159,10 +171,52 @@ public class XServiceManProfileActivity extends BaseActivity {
         }
     }
 
-    private class UpdateExserviceManActive extends AsyncTask<XServiceMan, Void, Boolean> {
+    private void getMyProfileFromServer(String email) {
+        try {
+            OkHttpClient client = OkHttpUtils.getOkHttpClient();
+            Request.Builder builder = new Request.Builder();
+            builder.url(ApiServiceConstants.MAIN_URL+ApiServiceConstants.XSERVICEMAN_PROFILE+"email="+email);
+            builder.get();
+            Request request = builder.build();
+            client.newCall(request).enqueue(new  Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast(getString( R.string.error_message));
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    final String body = response.body().string().toString();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                XServiceManData.XServiceman xServiceMan =
+                                        new Gson().fromJson(body,XServiceManData.XServiceman.class);
+
+                                setXServiceManData(xServiceMan);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private class UpdateExserviceManActive extends AsyncTask<XServiceManData.XServiceman, Void, Boolean> {
 
         @Override
-        protected Boolean doInBackground(XServiceMan... exServiceMEN) {
+        protected Boolean doInBackground(XServiceManData.XServiceman... exServiceMEN) {
             boolean isUpdated = XServiceManDataHelper.updateUserActiveStatus(XServiceManProfileActivity.this,
                     exServiceMEN[0].isActive+"",exServiceMEN[0].email);
             return isUpdated;
@@ -175,31 +229,31 @@ public class XServiceManProfileActivity extends BaseActivity {
         }
     }
 
-    private void setXServiceManData(){
+    private void setXServiceManData(XServiceManData.XServiceman exServiceMan){
         try{
             if (null != exServiceMan) {
                 tvTitle.setText(exServiceMan.firstName + " " + exServiceMan.lastName);
                 tvFirstName.setText(exServiceMan.firstName + "");
                 tvLastName.setText(exServiceMan.lastName + "");
                 tvEmail.setText(exServiceMan.email + "");
-                tvMobileNo.setText(exServiceMan.mobileNo + "");
+                tvMobileNo.setText(exServiceMan.mobileNumber + "");
                 tvServices.setText(exServiceMan.services + "");
                 tvDocList.setText(exServiceMan.reqDocs + "");
-                tvArea.setText(exServiceMan.circlePolicestation + "");
+                tvArea.setText(exServiceMan.divisionPoliceStation + "");
                 tvCity.setText(exServiceMan.district + "");
                 tvState.setText(exServiceMan.state + "");
-                Bitmap bitmap = getUserImageBitMap(exServiceMan.userImg);
+                Bitmap bitmap = getUserImageBitMap(exServiceMan.image);
                 if (bitmap != null)
                     ivUserImage.setImageBitmap(bitmap);
 
-                if((exServiceMan.status == 0)&&!(userType.equalsIgnoreCase(AppConstents.LOGIN_TYPE_NONE))&&!isFromMyProfile){
+                if((exServiceMan.status == 0)&&userType.equalsIgnoreCase(AppConstents.ADMIN)){
                     llActions.setVisibility(View.VISIBLE);
                 }
                 else{
                     llActions.setVisibility(View.GONE);
                 }
 
-                if(exServiceMan.isActive == 1){
+                if(exServiceMan.isActive){
                     tbActive.setChecked(true);
                 }
                 else{
@@ -208,6 +262,60 @@ public class XServiceManProfileActivity extends BaseActivity {
             }
         }
         catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    private void updateXServiceManStatus(XServiceManData.XServiceman xServiceman){
+        try {
+            OkHttpClient client = OkHttpUtils.getOkHttpClient();
+            Request.Builder builder = new Request.Builder();
+            if(userType.equalsIgnoreCase(AppConstents.ADMIN)){
+                builder.url(ApiServiceConstants.MAIN_URL+ApiServiceConstants.UPDATE_XSERVICEMAN_STATUS
+                        +"userType=ServiceMan&email="+xServiceman.email+"&status="+xServiceman.status);
+            }
+            builder.get();
+            Request request = builder.build();
+            client.newCall(request).enqueue(new  Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                   runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                           showToast(getString( R.string.error_message));
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    final String body = response.body().string().toString();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                if(body.equalsIgnoreCase("success")){
+                                    if(exServiceMan.status == 1){
+                                        showToast(exServiceMan.firstName + " " + exServiceMan.lastName + " " +
+                                                "Application Accepted Successfully");
+                                        finish();
+                                    }
+                                    else if(exServiceMan.status == -1){
+                                        showToast(exServiceMan.firstName + " " + exServiceMan.lastName + " " +
+                                                "Application Rejected Successfully");
+                                        finish();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

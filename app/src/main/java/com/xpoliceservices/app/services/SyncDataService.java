@@ -3,6 +3,7 @@ package com.xpoliceservices.app.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.xpoliceservices.app.database.AppDataHelper;
@@ -44,6 +45,7 @@ public class SyncDataService extends IntentService {
             OkHttpClient client = OkHttpUtils.getOkHttpClient();
             Request.Builder builder = new Request.Builder();
             builder.url(ApiServiceConstants.MAIN_URL + name);
+            Log.d("Service URL",ApiServiceConstants.MAIN_URL + name);
             builder.get();
             Request request = builder.build();
             client.newCall(request).enqueue(new Callback() {

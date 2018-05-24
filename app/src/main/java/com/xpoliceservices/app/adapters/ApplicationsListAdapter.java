@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.xpoliceservices.app.ApplicationDetailsActivity;
 import com.xpoliceservices.app.R;
 import com.xpoliceservices.app.constents.AppConstents;
-import com.xpoliceservices.app.model.Application;
+import com.xpoliceservices.app.model.ApplicationData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ApplicationsListAdapter extends RecyclerView.Adapter<ApplicationsListAdapter.ApplicationViewHolder> {
 
-    private List<Application> applicationList;
+    private List<ApplicationData.Application> applicationList;
     private Context mContext;
 
     public ApplicationsListAdapter() {
@@ -38,18 +38,18 @@ public class ApplicationsListAdapter extends RecyclerView.Adapter<ApplicationsLi
 
     @Override
     public void onBindViewHolder(ApplicationViewHolder holder, int position) {
-        holder.tvFullName.setText(applicationList.get(position).firstName + " " + applicationList.get(position).lastName);
-        holder.tvApplicationName.setText(applicationList.get(position).applicationType + "");
-        holder.tvDivisionPoliceStation.setText(applicationList.get(position).circlePolicestation + "");
-        holder.tvDate.setText(applicationList.get(position).data+"");
+        holder.tvFullName.setText(applicationList.get(position).getFirstName() + " " + applicationList.get(position).getLastName());
+        holder.tvApplicationName.setText(applicationList.get(position).getApplicationType() + "");
+        holder.tvDivisionPoliceStation.setText(applicationList.get(position).getCirclePolicestation() + "");
+        holder.tvDate.setText(applicationList.get(position).getData()+"");
 
-        if (applicationList.get(position).status == 0) {
+        if (applicationList.get(position).getStatus() == 0) {
             holder.tvStatus.setText(AppConstents.PENDING);
 //            holder.tvStatus.setTextColor(mContext.getColor(R.color.error_strip));
-        } else if (applicationList.get(position).status == 1) {
+        } else if (applicationList.get(position).getStatus() == 1) {
             holder.tvStatus.setText(AppConstents.INPROGRESS);
 //            holder.tvStatus.setTextColor(mContext.getColor(R.color.orange));
-        } else if (applicationList.get(position).status == 2) {
+        } else if (applicationList.get(position).getStatus() == 2) {
             holder.tvStatus.setText(AppConstents.COMPLETED);
 //            holder.tvStatus.setTextColor(mContext.getColor(R.color.button_green));
         }
@@ -66,7 +66,7 @@ public class ApplicationsListAdapter extends RecyclerView.Adapter<ApplicationsLi
 //        getImageOfServiceMan(applicationList.get(position).userImg,holder.ivApplicantImg);
     }
 
-    public void refresh(List<Application> applicationList) {
+    public void refresh(List<ApplicationData.Application> applicationList) {
         this.applicationList = applicationList;
         notifyDataSetChanged();
     }

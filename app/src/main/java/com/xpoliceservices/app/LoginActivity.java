@@ -10,11 +10,26 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.database.EndUserDataHelper;
 import com.xpoliceservices.app.database.XServiceManDataHelper;
+import com.xpoliceservices.app.utils.ApiServiceConstants;
+import com.xpoliceservices.app.utils.OkHttpUtils;
 import com.xpoliceservices.app.utils.PreferenceUtils;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class LoginActivity extends BaseActivity {
 
@@ -97,7 +112,8 @@ public class LoginActivity extends BaseActivity {
             PreferenceUtils.putStaringValue(AppConstents.EMAIL_ID, email);
             PreferenceUtils.putStaringValue(AppConstents.PASSWORD, password);
             PreferenceUtils.putStaringValue(AppConstents.USER_TYPE, userType);
-            new LoginAsyncTask().execute(args);
+//            new LoginAsyncTask().execute(args);
+            checkLogin(email,password);
         }
     }
 
@@ -192,6 +208,81 @@ public class LoginActivity extends BaseActivity {
             } else {
                 showToast("Please enter proper details");
             }
+        }
+    }
+
+
+    private void checkLogin(final String email, final String password){
+        try{
+            OkHttpClient client = OkHttpUtils.getOkHttpClient();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("email", email);
+            jsonObject.put("userType", userType);
+            jsonObject.put("password", password);
+//            Request.Builder builder = new Request.Builder();
+//            builder.url(ApiServiceConstants.MAIN_URL+ApiServiceConstants.USER_LOGIN+"email="+email+
+//                    "&password="+password+"&userType="+userType);
+//            builder.get();
+            String body = jsonObject.toString();
+            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body);
+            Request.Builder builder = new Request.Builder();
+            String method = "";
+            if(userType.equalsIgnoreCase(AppConstents.CUSTOMER)){
+                method = ApiServiceConstants.CUSTOMER_LOGIN;
+            }
+            else{
+                method = ApiServiceConstants.SERVICEMAN_LOGIN;
+            }
+            builder.url(ApiServiceConstants.MAIN_URL + method)
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("cache-control", "no-cache")
+                    .post(requestBody);
+            Request request = builder.build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast(getString(R.string.error_message));
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    final String body = response.body().string().toString();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                if(body.equalsIgnoreCase("updatePassword")){
+                                    Intent intent = new Intent(LoginActivity.this,ChangePasswordActivity.class);
+                                    intent.putExtra(AppConstents.EXTRA_EMAIL_ID,email);
+                                    intent.putExtra(AppConstents.EXTRA_USER_TYPE, userType);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else if(body.equalsIgnoreCase("success")){
+                                    Intent intent = new Intent(LoginActivity.this, DashBoardActivity.class);
+                                    intent.putExtra(AppConstents.EXTRA_USER_TYPE, userType);
+                                    PreferenceUtils.putBooleanValue(AppConstents.IS_LOGGEDIN, true);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else{
+                                    showToast(getString(R.string.error_message));
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

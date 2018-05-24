@@ -17,7 +17,7 @@ public interface AppConstents {
     String APPLICATION_LIST = "ApplicationList";
     String MY_SERVICES = "My Applied Services";
     String ADMIN = "Admin";
-    String SERVICE_MAN = "XService Man";
+    String SERVICEMAN = "ServiceMan";
     String CUSTOMER = "Customer";
     String LOGIN = "Login";
     String LOGOUT = "Logout";

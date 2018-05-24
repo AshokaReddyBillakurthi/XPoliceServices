@@ -7,16 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xpoliceservices.app.R;
-import com.xpoliceservices.app.model.XServiceMan;
+import com.xpoliceservices.app.model.XServiceManData;
+
 
 import java.util.List;
 
 public class AssignXServiceManAdapter extends RecyclerView.Adapter<AssignXServiceManAdapter.AssignXServiceManViewHolder>{
 
-    private List<XServiceMan> xServiceManList;
+    private List<XServiceManData.XServiceman> xServiceManList;
     private OnXServiceManSelectListener onXServiceManSelectListener;
 
-    public AssignXServiceManAdapter(List<XServiceMan> xServiceManList,
+    public AssignXServiceManAdapter(List<XServiceManData.XServiceman> xServiceManList,
                                     OnXServiceManSelectListener onXServiceManSelectListener){
         this.xServiceManList = xServiceManList;
         this.onXServiceManSelectListener = onXServiceManSelectListener;
@@ -54,6 +55,6 @@ public class AssignXServiceManAdapter extends RecyclerView.Adapter<AssignXServic
     }
 
     public interface OnXServiceManSelectListener{
-        void onXServiceManSelect(XServiceMan xServiceMan);
+        void onXServiceManSelect(XServiceManData.XServiceman xServiceMan);
     }
 }

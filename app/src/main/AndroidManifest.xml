@@ -60,7 +60,8 @@
             android:name=".EndUserProfileActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".PaymentActivity" />
-        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".NoNetWorkActivity"></activity>
     </application>
 
 </manifest>

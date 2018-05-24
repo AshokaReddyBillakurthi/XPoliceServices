@@ -15,7 +15,7 @@ import com.xpoliceservices.app.BaseActivity;
 import com.xpoliceservices.app.R;
 import com.xpoliceservices.app.XServiceManProfileActivity;
 import com.xpoliceservices.app.constents.AppConstents;
-import com.xpoliceservices.app.model.XServiceMan;
+import com.xpoliceservices.app.model.XServiceManData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class XServiceManListAdapter extends RecyclerView.Adapter<XServiceManListAdapter.ExServiceManViewHolder> {
 
-    private List<XServiceMan> listExServiceMan;
+    private List<XServiceManData.XServiceman> listExServiceMan;
     private Context mContext;
 
     public XServiceManListAdapter(Context mContext) {
@@ -40,7 +40,7 @@ public class XServiceManListAdapter extends RecyclerView.Adapter<XServiceManList
     @Override
     public void onBindViewHolder(ExServiceManViewHolder holder, int position) {
         holder.tvFullName.setText(listExServiceMan.get(position).firstName + " " + listExServiceMan.get(position).lastName + "");
-        holder.tvDivisionPoliceStation.setText(listExServiceMan.get(position).circlePolicestation + "");
+        holder.tvDivisionPoliceStation.setText(listExServiceMan.get(position).divisionPoliceStation + "");
 
         if (listExServiceMan.get(position).status == 0) {
             holder.tvStatus.setText("Pending");
@@ -53,10 +53,10 @@ public class XServiceManListAdapter extends RecyclerView.Adapter<XServiceManList
             holder.tvStatus.setTextColor(mContext.getResources().getColor(R.color.red));
         }
 
-        getImageOfServiceMan(listExServiceMan.get(position).userImg, holder.ivServiceManImg);
+        getImageOfServiceMan(listExServiceMan.get(position).image, holder.ivServiceManImg);
     }
 
-    public void refresh(List<XServiceMan> listExServiceMan) {
+    public void refresh(List<XServiceManData.XServiceman> listExServiceMan) {
         this.listExServiceMan = listExServiceMan;
         notifyDataSetChanged();
     }

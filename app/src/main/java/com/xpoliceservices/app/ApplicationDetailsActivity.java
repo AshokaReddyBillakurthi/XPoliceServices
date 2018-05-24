@@ -16,8 +16,8 @@ import com.xpoliceservices.app.adapters.AssignXServiceManAdapter;
 import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.database.ApplicationDataHelper;
 import com.xpoliceservices.app.database.XServiceManDataHelper;
-import com.xpoliceservices.app.model.Application;
-import com.xpoliceservices.app.model.XServiceMan;
+import com.xpoliceservices.app.model.ApplicationData;
+import com.xpoliceservices.app.model.XServiceManData;
 import com.xpoliceservices.app.utils.DialogUtils;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class ApplicationDetailsActivity extends BaseActivity {
     private TextView tvTitle,tvFullName,tvEmail,tvMobileNo,tvApplicationType,
             tvArea,tvOccupation,tvStatus;
     private ImageView ivBack,ivUserImage;
-    private Application application;
+    private ApplicationData.Application application;
     private LinearLayout llAssign;
     private String applicationNo="";
 
@@ -40,7 +40,7 @@ public class ApplicationDetailsActivity extends BaseActivity {
     @Override
     public void initGUI() {
         if(getIntent().getExtras()!=null){
-            application = (Application)getIntent().getExtras()
+            application = (ApplicationData.Application)getIntent().getExtras()
                     .getSerializable(AppConstents.EXTRA_PERMISSION_APPLICATION);
         }
         tvTitle = findViewById(R.id.tvTitle);
@@ -65,11 +65,11 @@ public class ApplicationDetailsActivity extends BaseActivity {
     @Override
     public void initData() {
         if(null!=application){
-            applicationNo = application.applicationNo;
+            applicationNo = application.applicationNumber;
             tvFullName.setText(application.firstName+"");
             tvOccupation.setText(application.lastName+"");
             tvEmail.setText(application.email+"");
-            tvMobileNo.setText(application.mobileNo+"");
+            tvMobileNo.setText(application.mobileNumber+"");
             tvApplicationType.setText(application.applicationType+"");
             tvArea.setText(application.circlePolicestation+"");
             tvTitle.setText(application.applicationType+"");
@@ -85,12 +85,12 @@ public class ApplicationDetailsActivity extends BaseActivity {
                 tvStatus.setText(AppConstents.COMPLETED);
                 tvStatus.setTextColor(getColor(R.color.green));
             }
-            Bitmap bitmap = getUserImageBitMap(application.userImg);
+            Bitmap bitmap = getUserImageBitMap(application.userImage);
             if(bitmap!=null){
                 ivUserImage.setImageBitmap(bitmap);
             }
 
-            if(TextUtils.isEmpty(application.xServiceManEmail)){
+            if(TextUtils.isEmpty(application.xserviceManEmail)){
                 llAssign.setVisibility(View.VISIBLE);
             }
             else{
@@ -109,16 +109,16 @@ public class ApplicationDetailsActivity extends BaseActivity {
     }
 
 
-    class GetAllServiceMansRelatedToDivision extends AsyncTask<String,Void,List<XServiceMan>> {
+    class GetAllServiceMansRelatedToDivision extends AsyncTask<String,Void,List<XServiceManData.XServiceman>> {
 
         @Override
-        protected List<XServiceMan> doInBackground(String... strings) {
+        protected List<XServiceManData.XServiceman> doInBackground(String... strings) {
             return XServiceManDataHelper.getAllXServiceMansBasedOnDivision(ApplicationDetailsActivity.this,
                     strings[0]);
         }
 
         @Override
-        protected void onPostExecute(List<XServiceMan> exServiceMEN) {
+        protected void onPostExecute(List<XServiceManData.XServiceman> exServiceMEN) {
             super.onPostExecute(exServiceMEN);
             if(null!=exServiceMEN){
                 showAssignXserviceManDialog(exServiceMEN);
@@ -126,7 +126,7 @@ public class ApplicationDetailsActivity extends BaseActivity {
         }
     }
 
-    public void showAssignXserviceManDialog(List<XServiceMan> xServiceManList) {
+    public void showAssignXserviceManDialog(List<XServiceManData.XServiceman> xServiceManList) {
         final Dialog dialog = new Dialog(ApplicationDetailsActivity.this);
         dialog.setCanceledOnTouchOutside(true);
         dialog.setCancelable(true);
@@ -137,7 +137,7 @@ public class ApplicationDetailsActivity extends BaseActivity {
         AssignXServiceManAdapter assignXServiceManAdapter = new AssignXServiceManAdapter(xServiceManList,
                 new AssignXServiceManAdapter.OnXServiceManSelectListener() {
             @Override
-            public void onXServiceManSelect(XServiceMan xServiceMan) {
+            public void onXServiceManSelect(XServiceManData.XServiceman xServiceMan) {
                 new ServiceAssignAsyncTask().execute(xServiceMan.email);
                 dialog.dismiss();
             }

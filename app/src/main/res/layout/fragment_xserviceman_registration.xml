@@ -103,7 +103,8 @@
                 android:textSize="16sp"
                 android:textColorHint="@color/gray"
                 android:hint="Password"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvState"
