@@ -127,7 +127,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rect_bg"
                 android:drawableRight="@drawable/ic_drop_down"
-                android:hint="Select City"
+                android:hint="Select District"
                 android:inputType="text"
                 android:padding="10dp"
                 android:textColor="@color/black"
@@ -228,7 +228,9 @@
                     android:padding="10dp"
                     android:text="Please upload documents related to your service:"
                     android:textSize="16sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:typeface="serif"/>
 
                 <Button
                     android:id="@+id/btnUploadDocs"
@@ -236,6 +238,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/colorPrimary"
                     android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/dimen_10dp"
                     android:text="Upload Docs"
                     android:textSize="16sp"
                     android:padding="5dp"
@@ -267,7 +270,6 @@
                     android:layout_height="100dp"
                     android:scaleType="fitXY" />
             </LinearLayout>
-
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

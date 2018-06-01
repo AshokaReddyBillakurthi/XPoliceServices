@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 
 import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.services.SyncDataService;
+import com.xpoliceservices.app.utils.NetworkUtils;
 import com.xpoliceservices.app.utils.PreferenceUtils;
 
 public class SplashActivity extends BaseActivity {
@@ -45,9 +46,14 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        Intent intent = new Intent(SplashActivity.this,SyncDataService.class);
-        startService(intent);
 
+        if(NetworkUtils.isNetworkAvailable(SplashActivity.this)){
+            Intent intent = new Intent(SplashActivity.this,SyncDataService.class);
+            startService(intent);
+        }
+        else{
+            moveToNoNetWorkActivity();
+        }
 //        checkPermissions();
     }
 

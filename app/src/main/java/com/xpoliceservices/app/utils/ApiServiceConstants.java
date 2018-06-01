@@ -23,6 +23,9 @@ public interface ApiServiceConstants {
     String XSERVICEMAN_PROFILE  = "/servicemanprofile?";
     String UPDATE_XSERVICEMAN_STATUS = "/updateservicemanstatus?";
     String GEO_DATA = "/geodata";
+    String GET_ASSIGNABLEEXSERVICEMEN = "/getassignableexservicemen?";
+    String ASSIGN_XSERVICEMAN = "/assignxserviceman?";
+    String UPDATE_APPLICATIONSTATUS = "/updateapplicationstatus?";
 //    String STATES = "/getStates";
 //    String DISTRICTS = "/getDistricts";
 //    String SUB_DIVISIONS = "/getSubDivisions";

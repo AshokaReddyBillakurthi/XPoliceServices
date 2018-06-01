@@ -12,6 +12,7 @@ import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.database.EndUserDataHelper;
 import com.xpoliceservices.app.model.EndUser;
 import com.xpoliceservices.app.utils.ApiServiceConstants;
+import com.xpoliceservices.app.utils.NetworkUtils;
 import com.xpoliceservices.app.utils.OkHttpUtils;
 
 import java.io.IOException;
@@ -74,7 +75,10 @@ public class EndUserProfileActivity extends BaseActivity {
         }
         else if(!TextUtils.isEmpty(email)){
 //            new GetUserDetailsTask().execute(email);
-            getMyProfileFromServer(email);
+            if(NetworkUtils.isNetworkAvailable(EndUserProfileActivity.this))
+                getMyProfileFromServer(email);
+            else
+                moveToNoNetWorkActivity();
         }
     }
 

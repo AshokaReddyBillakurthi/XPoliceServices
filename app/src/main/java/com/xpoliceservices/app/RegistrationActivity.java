@@ -14,6 +14,7 @@ public class RegistrationActivity extends BaseActivity {
     private TextView tvTitle;
     private ImageView ivBack;
     private Fragment fragment;
+    private String userType ="";
 
     @Override
     public int getRootLayout() {
@@ -38,10 +39,10 @@ public class RegistrationActivity extends BaseActivity {
         });
 
         if(userType.equalsIgnoreCase(AppConstents.USER_TYPE_SERVICEMAN)){
-            fragment = new XServiceManRegistrationFragment();
+            fragment =  XServiceManRegistrationFragment.getInstance(userType);
         }
         else if(userType.equalsIgnoreCase(AppConstents.USER_TYPE_CUSTOMER)){
-            fragment = new EndUserRegistrationFragment();
+            fragment = EndUserRegistrationFragment.getInstance(userType);
         }
 
         loadFragment(fragment);

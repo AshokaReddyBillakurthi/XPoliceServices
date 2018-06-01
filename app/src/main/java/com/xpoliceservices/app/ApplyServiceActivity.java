@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.xpoliceservices.app.adapters.ServiceInstructionsAdapter;
 import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.database.ApplicationDataHelper;
@@ -23,6 +24,7 @@ import com.xpoliceservices.app.utils.ApiServiceConstants;
 import com.xpoliceservices.app.utils.CalenderUtils;
 import com.xpoliceservices.app.utils.DataUtils;
 import com.xpoliceservices.app.utils.DialogUtils;
+import com.xpoliceservices.app.utils.NetworkUtils;
 import com.xpoliceservices.app.utils.OkHttpUtils;
 import com.xpoliceservices.app.utils.PreferenceUtils;
 
@@ -81,7 +83,9 @@ public class ApplyServiceActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        new GetUserDataAsyncTask().execute();
+//        new GetUserDataAsyncTask().execute();
+//        getEndUserDataFromServer(PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
+
 
         listServiceInstructions = DataUtils.getApplicationInstructions(serviceType);
         serviceInstructionsAdapter = new ServiceInstructionsAdapter(listServiceInstructions);
@@ -115,30 +119,7 @@ public class ApplyServiceActivity extends BaseActivity {
         llApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isValidData()&&null!=user) {
-                    listApplication = new ArrayList<>();
-                    String uniqueID = UUID.randomUUID().toString();
-                    ApplicationData.Application application = new ApplicationData.Application();
-                    application.applicationNumber = uniqueID;
-                    application.firstName = user.firstName;
-                    application.lastName = user.lastName;
-                    application.applicationType = serviceType;
-                    application.mobileNumber = user.mobileNumber;
-                    application.email = user.email;
-                    application.area = user.area;
-                    application.city = user.city;
-                    application.state = user.state;
-                    application.district = user.district;
-                    application.subDivision = user.subDivision;
-                    application.applicationType = serviceType;
-                    application.circlePolicestation = user.divisionPoliceStation;
-                    application.status = 0;
-                    application.data = CalenderUtils.getCurrentDate();
-                    if(cbxTermsAndConditions.isChecked())
-                        application.accepted = true;
-                    application.userImage = userImg;
-                    postDataToServer(application);
-                }
+                getEndUserDataFromServer(PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
             }
         });
     }
@@ -147,6 +128,72 @@ public class ApplyServiceActivity extends BaseActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, CAMERA_CAPTURE);
     }
+
+    private void getEndUserDataFromServer(String email) {
+        try {
+            OkHttpClient client = OkHttpUtils.getOkHttpClient();
+            Request.Builder builder = new Request.Builder();
+            builder.url(ApiServiceConstants.MAIN_URL+ApiServiceConstants.CUSTOMER_PROFILE+"email="+email);
+            builder.get();
+            Request request = builder.build();
+            client.newCall(request).enqueue(new  Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast(getString( R.string.error_message));
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    final String body = response.body().string().toString();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                user = new Gson().fromJson(body,EndUser.class);
+                                if(isValidData()&&null!=user) {
+                                    listApplication = new ArrayList<>();
+                                    String uniqueID = UUID.randomUUID().toString();
+                                    ApplicationData.Application application = new ApplicationData.Application();
+                                    application.applicationNumber = uniqueID;
+                                    application.firstName = user.firstName;
+                                    application.lastName = user.lastName;
+                                    application.applicationType = serviceType;
+                                    application.mobileNumber = user.mobileNumber;
+                                    application.email = user.email;
+                                    application.area = user.area;
+                                    application.city = user.city;
+                                    application.state = user.state;
+                                    application.district = user.district;
+                                    application.subDivision = user.subDivision;
+                                    application.applicationType = serviceType;
+                                    application.circlePolicestation = user.divisionPoliceStation;
+                                    application.status = 0;
+                                    application.data = CalenderUtils.getCurrentDate();
+                                    if(cbxTermsAndConditions.isChecked())
+                                        application.accepted = true;
+                                    application.userImage = userImg;
+                                    if(NetworkUtils.isNetworkAvailable(ApplyServiceActivity.this))
+                                        postDataToServer(application);
+                                    else
+                                        moveToNoNetWorkActivity();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     private boolean isValidData(){

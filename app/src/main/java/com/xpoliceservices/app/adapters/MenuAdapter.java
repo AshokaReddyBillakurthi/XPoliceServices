@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.xpoliceservices.app.AboutUsActivity;
+import com.xpoliceservices.app.ContactUsActivity;
 import com.xpoliceservices.app.DashBoardActivity;
 import com.xpoliceservices.app.EndUserProfileActivity;
 import com.xpoliceservices.app.R;
@@ -92,6 +94,18 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                             break;
                         }
                         case AppConstents.APPLICATION_LIST:{
+                            break;
+                        }
+                        case AppConstents.ABOUT_US:{
+                            ((DashBoardActivity)itemView.getContext()).closeDrawer();
+                            Intent intent = new Intent(itemView.getContext(), AboutUsActivity.class);
+                            itemView.getContext().startActivity(intent);
+                            break;
+                        }
+                        case AppConstents.CONTACT_US:{
+                            ((DashBoardActivity)itemView.getContext()).closeDrawer();
+                            Intent intent = new Intent(itemView.getContext(), ContactUsActivity.class);
+                            itemView.getContext().startActivity(intent);
                             break;
                         }
                         case AppConstents.LOGOUT:{

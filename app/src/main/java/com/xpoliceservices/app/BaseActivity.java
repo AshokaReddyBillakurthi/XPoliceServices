@@ -1,5 +1,6 @@
 package com.xpoliceservices.app;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,7 +21,7 @@ import java.util.Date;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    public static String userType = "";
+    //public static String userType = "";
     public String TAG = BaseActivity.class.getSimpleName();
     public String userImg = "";
 
@@ -37,6 +41,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showToast(String message) {
         Toast.makeText(BaseActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public void moveToNoNetWorkActivity() {
+        Intent intent = new Intent(BaseActivity.this, NoNetWorkActivity.class);
+        startActivity(intent);
     }
 
     public void storeImage(Bitmap image) {
@@ -106,6 +115,19 @@ public abstract class BaseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return myBitmap;
+    }
+
+
+    public String getJsonString(Object object) {
+        Gson gson = null;
+        try {
+            gson = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return gson.toJson(object);
     }
 
 }

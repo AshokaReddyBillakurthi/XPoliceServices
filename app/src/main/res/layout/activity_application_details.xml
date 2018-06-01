@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -23,16 +23,17 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:padding="5dp">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivUserImage"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_launcher_background"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="@color/light_blue" />
+                    app:civ_border_color="@color/light_blue"
+                    app:civ_border_width="2dp" />
             </RelativeLayout>
 
             <LinearLayout
@@ -253,26 +254,92 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="visible">
+                <EditText
+                    android:id="@+id/edtComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rect_bg"
+                    android:gravity="left|top"
+                    android:hint="Enter comments here"
+                    android:inputType="text"
+                    android:lines="3"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llEndUserComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/tvComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left|top"
+                    android:lines="3"
+                    android:ellipsize="end"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp" />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/llUpdateStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="Update Status"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/llAssign"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="gone">
+
         <TextView
             android:id="@+id/tvAccept"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:padding="15dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="15dp"
             android:text="Assign Application"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            android:background="@color/colorPrimary"
-            android:layout_gravity="center"
-            android:gravity="center"/>
+            android:textSize="18sp" />
     </LinearLayout>
 
 </LinearLayout>

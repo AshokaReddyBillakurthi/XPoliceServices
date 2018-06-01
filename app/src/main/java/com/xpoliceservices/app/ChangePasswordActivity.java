@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.utils.ApiServiceConstants;
+import com.xpoliceservices.app.utils.NetworkUtils;
 import com.xpoliceservices.app.utils.OkHttpUtils;
 import com.xpoliceservices.app.utils.PreferenceUtils;
 
@@ -86,7 +87,10 @@ public class ChangePasswordActivity extends BaseActivity {
             String newPwd = edtNewPwd.getText().toString();
             String confirmPwd = edtConfirmPwd.getText().toString();
             if(isValidData(currentPwd,newPwd,confirmPwd)){
-                updatePassword(currentPwd,newPwd);
+                if(NetworkUtils.isNetworkAvailable(ChangePasswordActivity.this))
+                    updatePassword(currentPwd,newPwd);
+                else
+                    moveToNoNetWorkActivity();
             }
         }
         catch(Exception e){

@@ -16,6 +16,8 @@ public class DataUtils {
             switch (loginType){
                 case AppConstents.LOGIN_ADMIN:
                     menuList.add(AppConstents.CREATE_SERVICE);
+                    menuList.add(AppConstents.ABOUT_US);
+                    menuList.add(AppConstents.CONTACT_US);
 //                    menuList.add(AppConstents.SERVICE_MAN_LIST);
 //                    menuList.add(AppConstents.CUSTOMER_LIST);
                     menuList.add(AppConstents.LOGOUT);
@@ -23,12 +25,16 @@ public class DataUtils {
                 case AppConstents.LOGIN_SERVICE_MAN:
 //                    menuList.add(AppConstents.APPLICATION_LIST);
                     menuList.add(AppConstents.MY_PROFILE);
+                    menuList.add(AppConstents.ABOUT_US);
+                    menuList.add(AppConstents.CONTACT_US);
 //                    menuList.add(AppConstents.CHAT);
                     menuList.add(AppConstents.LOGOUT);
                     break;
                 case AppConstents.LOGIN_CUSTOMER:
 //                    menuList.add(AppConstents.SERVICES);
                     menuList.add(AppConstents.MY_PROFILE);
+                    menuList.add(AppConstents.ABOUT_US);
+                    menuList.add(AppConstents.CONTACT_US);
 //                    menuList.add(AppConstents.CHAT);
 //                    menuList.add(AppConstents.MY_SERVICES);
                     menuList.add(AppConstents.LOGOUT);
@@ -36,6 +42,8 @@ public class DataUtils {
                 case AppConstents.LOGIN_TYPE_NONE:
                     menuList.add(AppConstents.SERVICES);
                     menuList.add(AppConstents.SERVICE_MAN_LIST);
+                    menuList.add(AppConstents.ABOUT_US);
+                    menuList.add(AppConstents.CONTACT_US);
                     menuList.add(AppConstents.LOGIN);
                     break;
                 default:

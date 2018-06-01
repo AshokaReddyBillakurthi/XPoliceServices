@@ -24,6 +24,7 @@ import com.xpoliceservices.app.fragments.ServicesFragment;
 import com.xpoliceservices.app.fragments.XServiceMansListFragment;
 import com.xpoliceservices.app.utils.DataUtils;
 import com.xpoliceservices.app.utils.DialogUtils;
+import com.xpoliceservices.app.utils.PreferenceUtils;
 
 import java.util.List;
 import java.util.Stack;
@@ -40,6 +41,7 @@ public class DashBoardActivity extends BaseActivity {
     private Fragment fragment;
     public Stack<Fragment> fragmentStack = null;
     private boolean doubleBackToExitPressedOnce = false;
+    private String userType = "";
 
 
     @Override
@@ -49,10 +51,7 @@ public class DashBoardActivity extends BaseActivity {
 
     @Override
     public void initGUI() {
-
-        if(null!= getIntent().getExtras()){
-            userType = getIntent().getStringExtra(AppConstents.EXTRA_USER_TYPE);
-        }
+        userType = PreferenceUtils.getStringValue(AppConstents.USER_TYPE);
         drawer = findViewById(R.id.drawer);
         llMenu = findViewById(R.id.llMenu);
         bottomNavigationView = findViewById(R.id.navigation);

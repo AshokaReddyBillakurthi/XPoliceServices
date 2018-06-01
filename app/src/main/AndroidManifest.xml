@@ -59,9 +59,21 @@
         <activity
             android:name=".EndUserProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".PaymentActivity" />
-        <activity android:name=".ChangePasswordActivity" />
-        <activity android:name=".NoNetWorkActivity"></activity>
+        <activity
+            android:name=".PaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NoNetWorkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ContactUsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

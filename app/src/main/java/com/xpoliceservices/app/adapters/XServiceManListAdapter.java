@@ -16,6 +16,7 @@ import com.xpoliceservices.app.R;
 import com.xpoliceservices.app.XServiceManProfileActivity;
 import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.model.XServiceManData;
+import com.xpoliceservices.app.utils.PreferenceUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class XServiceManListAdapter extends RecyclerView.Adapter<XServiceManList
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, XServiceManProfileActivity.class);
                     intent.putExtra(AppConstents.EXTRA_USER, listExServiceMan.get(getAdapterPosition()));
-                    intent.putExtra(AppConstents.EXTRA_USER_TYPE, ((BaseActivity) (itemView.getContext())).userType);
+                    intent.putExtra(AppConstents.EXTRA_USER_TYPE, PreferenceUtils.getStringValue(AppConstents.USER_TYPE));
                     mContext.startActivity(intent);
                 }
             });

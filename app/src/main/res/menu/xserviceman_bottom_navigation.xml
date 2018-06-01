@@ -13,6 +13,6 @@
 
     <item
         android:id="@+id/navigation_filter"
-        android:icon="@drawable/ic_filter"
+        android:icon="@drawable/ic_funnel"
         android:title="Filter"/>
 </menu>

@@ -30,6 +30,7 @@ import com.xpoliceservices.app.model.DataModel;
 import com.xpoliceservices.app.model.EndUser;
 import com.xpoliceservices.app.utils.ApiServiceConstants;
 import com.xpoliceservices.app.utils.DialogUtils;
+import com.xpoliceservices.app.utils.NetworkUtils;
 import com.xpoliceservices.app.utils.OkHttpUtils;
 
 import org.json.JSONObject;
@@ -66,6 +67,21 @@ public class EndUserRegistrationFragment extends BaseFragment {
     private String districtCode = "";
     private String subDivisionCode = "";
     private boolean isPosted = false;
+    private String userType = "";
+    private static EndUserRegistrationFragment endUserRegistrationFragment;
+
+    public static EndUserRegistrationFragment getInstance(String userType){
+        try{
+            endUserRegistrationFragment = new EndUserRegistrationFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(AppConstents.USER_TYPE,userType);
+            endUserRegistrationFragment.setArguments(bundle);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return endUserRegistrationFragment;
+    }
 
     @Nullable
     @Override
@@ -77,7 +93,11 @@ public class EndUserRegistrationFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        if(null != getArguments()){
+            Bundle bundle = this.getArguments();
+            if(bundle.containsKey(AppConstents.USER_TYPE))
+                userType = bundle.getString(AppConstents.USER_TYPE);
+        }
         tvTermsandConditions = view.findViewById(R.id.tvTermsandConditions);
         llRegister = view.findViewById(R.id.llRegister);
         edtFirstName = view.findViewById(R.id.edtFirstName);
@@ -298,19 +318,25 @@ public class EndUserRegistrationFragment extends BaseFragment {
                 user.city = "";
                 user.area = "";
                 user.image = ((BaseActivity)getContext()).userImg;
-                user.userType = ((BaseActivity)getContext()).userType;
+                user.userType = userType;
                 user.district = district;
                 user.subDivision = subDivision;
                 user.divisionPoliceStation = divisionPoliceStation;
-                postDataToServer(user);
-                if(isPosted){
-                    arrayList.add(user);
-                    new UserAsyncTask().execute(arrayList);
-                    ((BaseActivity)getContext()).showToast("Data posted Successfully");
+                if(NetworkUtils.isNetworkAvailable(getContext())){
+                    postDataToServer(user);
+                    if(isPosted){
+                        arrayList.add(user);
+                        new UserAsyncTask().execute(arrayList);
+                        ((BaseActivity)getContext()).showToast("Data posted Successfully");
+                    }
+                    else{
+                        ((BaseActivity)getContext()).showToast("Failed");
+                    }
                 }
                 else{
-                    ((BaseActivity)getContext()).showToast("Failed");
+                    ((BaseActivity)getContext()).moveToNoNetWorkActivity();
                 }
+
 //                arrayList.add(user);
 //                new UserAsyncTask().execute(arrayList);
             }
@@ -334,7 +360,6 @@ public class EndUserRegistrationFragment extends BaseFragment {
         @Override
         protected Boolean doInBackground(ArrayList<EndUser>[] arrayLists) {
             EndUserDataHelper.insertUserData(getContext(),arrayLists[0]);
-
             return true;
         }
 
@@ -369,10 +394,10 @@ public class EndUserRegistrationFragment extends BaseFragment {
         } else if (!(Patterns.EMAIL_ADDRESS.matcher(email).matches())) {
             isValid = false;
             ((BaseActivity)getContext()).showToast("Please enter valid email");
-        } else if (TextUtils.isEmpty(password)) {
+        } /*else if (TextUtils.isEmpty(password)) {
             isValid = false;
             ((BaseActivity)getContext()).showToast("Please enter password");
-        } else if (TextUtils.isEmpty(state)) {
+        }*/ else if (TextUtils.isEmpty(state)) {
             isValid = false;
             ((BaseActivity)getContext()).showToast("Please select state");
         } else if (TextUtils.isEmpty(district)) {

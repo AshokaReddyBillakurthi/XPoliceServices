@@ -69,10 +69,13 @@ public class ApplicationData implements Serializable{
         @SerializedName("data")
         @Expose
         public String data;
+        @SerializedName("comment")
+        @Expose
+        public String comment;
         @SerializedName("accepted")
         @Expose
         public Boolean accepted;
-        @SerializedName("xserviceManEmail")
+        @SerializedName("xServiceManEmail")
         @Expose
         public String xserviceManEmail;
 
@@ -124,6 +127,14 @@ public class ApplicationData implements Serializable{
             this.state = state;
         }
 
+        public String getComment() {
+            return comment;
+        }
+
+        public void setComment(String comment) {
+            this.comment = comment;
+        }
+
         public String getCity() {
             return city;
         }
@@ -131,6 +142,7 @@ public class ApplicationData implements Serializable{
         public void setCity(String city) {
             this.city = city;
         }
+
 
         public String getArea() {
             return area;

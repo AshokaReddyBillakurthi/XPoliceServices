@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.xpoliceservices.app.BaseActivity;
 import com.xpoliceservices.app.DashBoardActivity;
 import com.xpoliceservices.app.R;
 import com.xpoliceservices.app.adapters.XServiceManListAdapter;
@@ -19,6 +18,7 @@ import com.xpoliceservices.app.database.XServiceManDataHelper;
 import com.xpoliceservices.app.model.XServiceManData;
 import com.xpoliceservices.app.utils.ApiServiceConstants;
 import com.xpoliceservices.app.utils.OkHttpUtils;
+import com.xpoliceservices.app.utils.PreferenceUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -81,7 +81,7 @@ public class XServiceMansListFragment extends BaseFragment {
         try {
             OkHttpClient client = OkHttpUtils.getOkHttpClient();
             Request.Builder builder = new Request.Builder();
-            if(((BaseActivity)getContext()).userType.equalsIgnoreCase(AppConstents.ADMIN)){
+            if(PreferenceUtils.getStringValue(AppConstents.USER_TYPE).equalsIgnoreCase(AppConstents.ADMIN)){
                 builder.url(ApiServiceConstants.MAIN_URL+ApiServiceConstants.GET_XSERVICEMAN+"userType=ServiceMan");
             }
             builder.get();
@@ -105,11 +105,9 @@ public class XServiceMansListFragment extends BaseFragment {
                         public void run() {
                             try {
                                 XServiceManData xServiceManData = new Gson().fromJson(body,XServiceManData.class);
-                                if(null!=xServiceManData){
-                                    if(null!=xServiceManData.getExServiceMen()
-                                            &&!xServiceManData.getExServiceMen().isEmpty()){
+                                if(null!=xServiceManData&&null!=xServiceManData.getExServiceMen()
+                                        &&!xServiceManData.getExServiceMen().isEmpty()){
                                         xServiceManListAdapter.refresh(xServiceManData.getExServiceMen());
-                                    }
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();

@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.xpoliceservices.app.BaseActivity;
 import com.xpoliceservices.app.DashBoardActivity;
 import com.xpoliceservices.app.R;
 import com.xpoliceservices.app.adapters.ApplicationsListAdapter;
@@ -34,6 +33,7 @@ public class AppliedServicesFragment extends BaseFragment{
 
     private RecyclerView rvApplications;
     private ApplicationsListAdapter applicationsListAdapter;
+    private String userType = "";
 
     @Nullable
     @Override
@@ -51,12 +51,19 @@ public class AppliedServicesFragment extends BaseFragment{
         rvApplications = view.findViewById(R.id.rvApplications);
         rvApplications.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        userType = PreferenceUtils.getStringValue(AppConstents.USER_TYPE);
+
         applicationsListAdapter = new ApplicationsListAdapter();
         rvApplications.setAdapter(applicationsListAdapter);
 
         ((DashBoardActivity)getContext()).tvScreenTitle.setText("Applied Services");
 
 //        new GetApplicationsAsyncTask().execute();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getApplicationsFromServer(PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
     }
 
@@ -64,10 +71,10 @@ public class AppliedServicesFragment extends BaseFragment{
 
         @Override
         protected List<ApplicationData.Application> doInBackground(String... strings) {
-            if(((BaseActivity)getContext()).userType.equalsIgnoreCase(AppConstents.USER_TYPE_ADMIN)){
+            if(userType.equalsIgnoreCase(AppConstents.USER_TYPE_ADMIN)){
                 return ApplicationDataHelper.getAllApplications(getContext());
             }
-            else if(((BaseActivity)getContext()).userType.equalsIgnoreCase(AppConstents.USER_TYPE_SERVICEMAN)){
+            else if(userType.equalsIgnoreCase(AppConstents.USER_TYPE_SERVICEMAN)){
                 return ApplicationDataHelper.getAllApplications(getContext());
             }
             else{
@@ -90,10 +97,13 @@ public class AppliedServicesFragment extends BaseFragment{
         try {
             OkHttpClient client = OkHttpUtils.getOkHttpClient();
             Request.Builder builder = new Request.Builder();
-            if(((BaseActivity)getContext()).userType.equalsIgnoreCase(AppConstents.CUSTOMER)){
-                builder.url(ApiServiceConstants.MAIN_URL+ApiServiceConstants.GET_APPLICATIONS+"email="+email);
+
+            if(userType.equalsIgnoreCase(AppConstents.CUSTOMER)
+                    ||userType.equalsIgnoreCase(AppConstents.XSERVICEMAN)){
+                builder.url(ApiServiceConstants.MAIN_URL+ApiServiceConstants.GET_APPLICATIONS
+                        +"email="+email+"&userType="+PreferenceUtils.getStringValue(AppConstents.USER_TYPE));
             }
-            else if(((BaseActivity)getContext()).userType.equalsIgnoreCase(AppConstents.ADMIN)){
+            else if(userType.equalsIgnoreCase(AppConstents.ADMIN)){
                 builder.url(ApiServiceConstants.MAIN_URL+ApiServiceConstants.GET_APPLICATIONS);
             }
 

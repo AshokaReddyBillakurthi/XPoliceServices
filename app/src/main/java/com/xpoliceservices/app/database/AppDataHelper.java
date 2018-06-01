@@ -169,7 +169,8 @@ public class AppDataHelper {
         SQLiteDatabase sqLiteDatabase = null;
         try{
             sqLiteDatabase = DatabaseHelper.getInstance(context).getWritableDatabase();
-            String selectQuery = " Select stateCode,stateName from tblStates ";
+            String selectQuery = " Select stateCode,stateName from tblStates " +
+                    "Where stateName Like '%Telangana%'";
             Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
             if(null!=cursor&&cursor.moveToFirst()){
                 DataModel.State state = null;

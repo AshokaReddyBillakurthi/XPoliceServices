@@ -70,6 +70,9 @@ public class XServiceManData implements Serializable {
         @SerializedName("services")
         @Expose
         public String services;
+        @SerializedName("subservices")
+        @Expose
+        public String subservices;
         @SerializedName("isActive")
         @Expose
         public Boolean isActive;

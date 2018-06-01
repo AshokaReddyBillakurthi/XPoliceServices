@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.xpoliceservices.app.BaseActivity;
 import com.xpoliceservices.app.R;
 import com.xpoliceservices.app.RegistrationActivity;
@@ -32,9 +33,12 @@ import com.xpoliceservices.app.database.XServiceManDataHelper;
 import com.xpoliceservices.app.model.DataModel;
 import com.xpoliceservices.app.model.XServiceManData;
 import com.xpoliceservices.app.utils.ApiServiceConstants;
+import com.xpoliceservices.app.utils.DataUtils;
 import com.xpoliceservices.app.utils.DialogUtils;
 import com.xpoliceservices.app.utils.FilePathUtils;
+import com.xpoliceservices.app.utils.NetworkUtils;
 import com.xpoliceservices.app.utils.OkHttpUtils;
+
 
 import org.json.JSONObject;
 
@@ -72,6 +76,22 @@ public class XServiceManRegistrationFragment extends BaseFragment {
     private static final int PICK_FILE_REQUEST = 100;
     private static final int CAMERA_CAPTURE = 101;
 
+    private String userType = "";
+    private static XServiceManRegistrationFragment xServiceManRegistrationFragment;
+
+    public static XServiceManRegistrationFragment getInstance(String userType){
+        try{
+            xServiceManRegistrationFragment = new XServiceManRegistrationFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(AppConstents.USER_TYPE,userType);
+            xServiceManRegistrationFragment.setArguments(bundle);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return xServiceManRegistrationFragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,6 +102,12 @@ public class XServiceManRegistrationFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(null != getArguments()){
+            Bundle bundle = this.getArguments();
+            if(bundle.containsKey(AppConstents.USER_TYPE))
+                userType = bundle.getString(AppConstents.USER_TYPE);
+        }
 
         edtFirstName = view.findViewById(R.id.edtFirstName);
         edtLastName = view.findViewById(R.id.edtLastName);
@@ -221,7 +247,6 @@ public class XServiceManRegistrationFragment extends BaseFragment {
                         }
                     }).start();
                 }
-
             }
         });
 
@@ -307,6 +332,7 @@ public class XServiceManRegistrationFragment extends BaseFragment {
             String divisionPoliceStation = tvDivisionPoliceStation.getText().toString().trim();
             StringBuilder strDoc = new StringBuilder();
             StringBuilder strServices = new StringBuilder();
+            StringBuilder strSubServices = new StringBuilder();
             if (cbxPolicePermissions.isChecked()
                     || cbxDraftingComplaints.isChecked()
                     || cbxMatrimonialVerifications.isChecked()
@@ -315,18 +341,46 @@ public class XServiceManRegistrationFragment extends BaseFragment {
 
                 if (cbxPolicePermissions.isChecked()) {
                     strServices.append(cbxPolicePermissions.getText().toString()).append(",");
+                    String serviceName = cbxPolicePermissions.getText().toString();
+                    List<String> listSubServices = DataUtils.getSubServices(serviceName);
+                    if(null!=listSubServices&&!listSubServices.isEmpty()){
+                        for(String subService:listSubServices){
+                            strSubServices.append(subService).append(",");
+                        }
+                    }
                 }
 
                 if (cbxDraftingComplaints.isChecked()) {
                     strServices.append(cbxDraftingComplaints.getText().toString()).append(",");
+                    String serviceName = cbxDraftingComplaints.getText().toString();
+                    List<String> listSubServices = DataUtils.getSubServices(serviceName);
+                    if(null!=listSubServices&&!listSubServices.isEmpty()){
+                        for(String subService:listSubServices){
+                            strSubServices.append(subService).append(",");
+                        }
+                    }
                 }
 
                 if (cbxMatrimonialVerifications.isChecked()) {
                     strServices.append(cbxMatrimonialVerifications.getText().toString()).append(",");
+                    String serviceName = cbxMatrimonialVerifications.getText().toString();
+                    List<String> listSubServices = DataUtils.getSubServices(serviceName);
+                    if(null!=listSubServices&&!listSubServices.isEmpty()){
+                        for(String subService:listSubServices){
+                            strSubServices.append(subService).append(",");
+                        }
+                    }
                 }
 
                 if (cbxPIdAddressTrace.isChecked()) {
                     strServices.append(cbxPIdAddressTrace.getText().toString()).append(",");
+                    String serviceName = cbxPIdAddressTrace.getText().toString();
+                    List<String> listSubServices = DataUtils.getSubServices(serviceName);
+                    if(null!=listSubServices&&!listSubServices.isEmpty()){
+                        for(String subService:listSubServices){
+                            strSubServices.append(subService).append(",");
+                        }
+                    }
                 }
             }
             if (validateData(firstName, lastName, exPoliceId, mobileNo, email, password,
@@ -342,7 +396,7 @@ public class XServiceManRegistrationFragment extends BaseFragment {
                 exServiceMan.city = "city";
                 exServiceMan.area = "area";
                 exServiceMan.isActive = true;
-                exServiceMan.userType = ((BaseActivity)getContext()).userType;
+                exServiceMan.userType = userType;
                 exServiceMan.image = ((BaseActivity)getContext()).userImg;
                 exServiceMan.status = 0;
                 if (docList != null && docList.size() > 0) {
@@ -352,15 +406,22 @@ public class XServiceManRegistrationFragment extends BaseFragment {
                 }
                 exServiceMan.reqDocs = strDoc.toString();
                 exServiceMan.services = strServices.toString();
+                exServiceMan.subservices = strSubServices.toString();
                 exServiceMan.district = district;
                 exServiceMan.subDivision = subDivision;
                 exServiceMan.divisionPoliceStation = divisionPoliceStation;
-                if(postDataToServer(exServiceMan)){
-                    ((BaseActivity)getContext()).showToast("Successfully Inserted");
+                if(NetworkUtils.isNetworkAvailable(getContext())){
+                    if(postDataToServer(exServiceMan)){
+                        ((BaseActivity)getContext()).showToast("Successfully Inserted");
+                    }
+                    else{
+                        ((BaseActivity)getContext()).showToast("Insertion Failed");
+                    }
                 }
                 else{
-                    ((BaseActivity)getContext()).showToast("Insertion Failed");
+                    ((BaseActivity)getContext()).moveToNoNetWorkActivity();
                 }
+
                 arrayList.add(exServiceMan);
                 new ExServiceManRegistrationAsyncTask().execute(arrayList);
             }
@@ -485,7 +546,6 @@ public class XServiceManRegistrationFragment extends BaseFragment {
         }
     }
 
-
     private boolean isPosted = false;
     private boolean postDataToServer(XServiceManData.XServiceman exServiceMan) {
         try {
@@ -508,14 +568,16 @@ public class XServiceManRegistrationFragment extends BaseFragment {
             jsonObject.put("divisionPoliceStation",exServiceMan.divisionPoliceStation);
             jsonObject.put("reqDocs",exServiceMan.reqDocs);
             jsonObject.put("services",exServiceMan.services);
-            String body = jsonObject.toString();
+            jsonObject.put("subservices",exServiceMan.subservices);
+            String body = jsonObject.toString();  //((BaseActivity)getContext()).getJsonString(exServiceMan);
             RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body);
             Request.Builder builder = new Request.Builder();
-            builder.url(ApiServiceConstants.MAIN_URL + ApiServiceConstants.X_SERVICEMAN_REGISTRATION).addHeader("Content-Type", "application/json")
+            builder.url(ApiServiceConstants.MAIN_URL + ApiServiceConstants.X_SERVICEMAN_REGISTRATION)
+                    .addHeader("Content-Type", "application/json")
                     .addHeader("cache-control", "no-cache")
                     .post(requestBody);
             Request request = builder.build();
-            client.newCall(request).enqueue(new  Callback() {
+            client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     ((RegistrationActivity)getContext()).runOnUiThread(new Runnable() {
@@ -542,8 +604,8 @@ public class XServiceManRegistrationFragment extends BaseFragment {
 //                                    Toast.makeText(UserRegistrationActivity.this,message.toString(),Toast.LENGTH_LONG).show();
                                 } else {
                                     isPosted = false;
-//                                    Toast.makeText(UserRegistrationActivity.this,R.string.error_message,Toast.LENGTH_LONG).show();
-                                    DialogUtils.showDialog(getContext(), getResources().getString(R.string.error_message), AppConstents.FINISH, false);
+                                    DialogUtils.showDialog(getContext(), getResources().getString(R.string.error_message),
+                                            AppConstents.FINISH, false);
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();

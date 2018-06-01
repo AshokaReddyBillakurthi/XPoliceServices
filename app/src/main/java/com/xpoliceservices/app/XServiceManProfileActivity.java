@@ -13,6 +13,7 @@ import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.database.XServiceManDataHelper;
 import com.xpoliceservices.app.model.XServiceManData;
 import com.xpoliceservices.app.utils.ApiServiceConstants;
+import com.xpoliceservices.app.utils.NetworkUtils;
 import com.xpoliceservices.app.utils.OkHttpUtils;
 import com.xpoliceservices.app.utils.PreferenceUtils;
 
@@ -36,6 +37,7 @@ public class XServiceManProfileActivity extends BaseActivity {
     private ToggleButton tbActive;
     private LinearLayout llActions;
     private boolean isFromMyProfile = false;
+    private String userType = "";
 
     @Override
     public int getRootLayout() {
@@ -47,12 +49,11 @@ public class XServiceManProfileActivity extends BaseActivity {
         if (null!=getIntent().getExtras()) {
             exServiceMan = (XServiceManData.XServiceman) getIntent().getExtras()
                     .getSerializable(AppConstents.EXTRA_USER);
-            userType = getIntent().getExtras()
-                    .getString(AppConstents.EXTRA_USER_TYPE, "");
 
             isFromMyProfile = getIntent().getExtras()
                     .getBoolean(AppConstents.EXTRA_ISFROM_MYPROFILE,false);
         }
+        userType = PreferenceUtils.getStringValue(AppConstents.USER_TYPE);
         tvTitle = findViewById(R.id.tvTitle);
         tvFirstName = findViewById(R.id.tvFirstName);
         tvLastName = findViewById(R.id.tvLastName);
@@ -124,8 +125,13 @@ public class XServiceManProfileActivity extends BaseActivity {
         if(null!=exServiceMan)
             setXServiceManData(exServiceMan);
         else{
-//            new GetExserviceManDetails().execute();
-            getMyProfileFromServer(PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
+            if(NetworkUtils.isNetworkAvailable(XServiceManProfileActivity.this)){
+                getMyProfileFromServer(PreferenceUtils.getStringValue(AppConstents.EMAIL_ID));
+            }
+            else{
+                moveToNoNetWorkActivity();
+            }
+
         }
     }
 

@@ -16,6 +16,7 @@ import com.xpoliceservices.app.constents.AppConstents;
 import com.xpoliceservices.app.database.EndUserDataHelper;
 import com.xpoliceservices.app.database.XServiceManDataHelper;
 import com.xpoliceservices.app.utils.ApiServiceConstants;
+import com.xpoliceservices.app.utils.NetworkUtils;
 import com.xpoliceservices.app.utils.OkHttpUtils;
 import com.xpoliceservices.app.utils.PreferenceUtils;
 
@@ -37,6 +38,7 @@ public class LoginActivity extends BaseActivity {
     private EditText edtEmail, edtPassword;
     private Button btnLogin, btnRegister;
     private TextView tvSkipLogin;
+    private String userType = "";
 
     @Override
     public int getRootLayout() {
@@ -113,7 +115,12 @@ public class LoginActivity extends BaseActivity {
             PreferenceUtils.putStaringValue(AppConstents.PASSWORD, password);
             PreferenceUtils.putStaringValue(AppConstents.USER_TYPE, userType);
 //            new LoginAsyncTask().execute(args);
-            checkLogin(email,password);
+            if(NetworkUtils.isNetworkAvailable(LoginActivity.this)){
+                checkLogin(email,password);
+            }
+            else{
+                moveToNoNetWorkActivity();
+            }
         }
     }
 
