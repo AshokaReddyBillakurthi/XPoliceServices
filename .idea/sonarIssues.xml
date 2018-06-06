@@ -3,12 +3,147 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="/a.dummy">
           <value>
             <set />
           </value>
         </entry>
         <entry key="/fragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/PolicePermissions/app/src/main/java/com/techouts/pcomplaints/ApplyServiceActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/PolicePermissions/app/src/main/java/com/techouts/pcomplaints/ExServiceManDetailsActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/PolicePermissions/app/src/main/java/com/techouts/pcomplaints/ExServiceManRegistrationActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/PolicePermissions/app/src/main/java/com/techouts/pcomplaints/LoginActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/PolicePermissions/app/src/main/java/com/techouts/pcomplaints/UserDetailsActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/PolicePermissions/app/src/main/java/com/techouts/pcomplaints/model/ExServiceMan.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/PolicePermissions/app/src/main/res/layout/activity_payment.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/data/analytics/AdobeAnalyticUtils.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/data/analytics/AnalyticsTracker.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/data/analytics/tags/AdobeAnalyticEventParamName.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/data/analytics/tags/AdobeAnalyticsEventType.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/autosuggestion/AutoSuggestionActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/configurablepages/widgets/LinkNavigationHandler.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/configurablepages/widgets/WidgetsFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/login/SignInFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/login/SignUpFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/myaccount/MyAccountActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/ordercompleted/ThankYouActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/payment/PaymentActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/pdp/FCCProductDetailActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/pdp/ProductDetailActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/plp/FilterActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/plp/ProductListFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/shoppingbag/MyWishListFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../ShoppersStop/ShoppersStop/app/src/main/java/com/shoppersstop/apps/ui/splash/SplashActivity.java">
           <value>
             <set />
           </value>
@@ -23,7 +158,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/AboutUsActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/ApplicationDetailsActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/ApplyServiceActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/BaseActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/ChangePasswordActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/ContactUsActivity.java">
           <value>
             <set />
           </value>
@@ -33,7 +193,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/EndUserProfileActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/LoginActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/NoNetWorkActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/PaymentActivity.java">
           <value>
             <set />
           </value>
@@ -48,7 +223,52 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/SubServicesActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/TermsAndConditionsActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/XPoliceServiceApplication.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/XServiceManDetailsActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/XServiceManProfileActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/ApplicationsListAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/AssignXServiceManAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/DistrictAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/DivisionPoliceStationAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/ExServiceManListAdapter.java">
           <value>
             <set />
           </value>
@@ -58,12 +278,92 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/ServiceInstructionsAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/ServicesAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/StateAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/SubDivisionAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/SubServicesAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/adapters/XServiceManListAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/constents/AppConstents.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/BaseFragment.java">
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/custom/CustomDialog.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/custom/CustomRecyclerView.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/database/AppDataHelper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/database/ApplicationDataHelper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/database/ApplicationHelper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/database/DatabaseHelper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/database/EndUserDataHelper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/database/ServicesDataHelper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/database/XServiceManDataHelper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/AdminDashboardFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/AppliedServicesFragment.java">
           <value>
             <set />
           </value>
@@ -73,7 +373,97 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/FilterFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/HomeFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/ServicesFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/UserDashBoardFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/XServiceManDashBoardFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/XServiceManFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/XServiceManRegistrationFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/fragments/XServiceMansListFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/model/Application.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/model/ApplicationData.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/model/DataModel.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/model/EndUser.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/model/XServiceMan.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/model/XServiceManData.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/services/SyncDataService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/utils/ApiServiceConstants.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/utils/CalenderUtils.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/utils/DataUtils.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/xpoliceservices/app/utils/DialogUtils.java">
           <value>
             <set />
           </value>
@@ -83,12 +473,47 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/anim/slide_up_in.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/anim/slide_up_out.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_about_us.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_application_details.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_apply_service.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_change_paddword.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_contact_us.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_dash_board.xml">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml">
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_end_user_profile.xml">
           <value>
             <set />
           </value>
@@ -98,22 +523,162 @@
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml">
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_no_net_work.xml">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/common_header.xml">
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_payment.xml">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/app/src/main/res/layout/menu_list_item.xml">
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_registration.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_sub_services.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_terms_and_conditions.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_xservice_man_details.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_xservice_man_profile.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/application_list_item_cell.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/end_user_list_item_cell.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_admin_dashboard.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_applied_services.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_enduser_registration.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_filter.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_services.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_xserviceman.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_xserviceman_list.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_xserviceman_registration.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/layout_assign_xserviceman.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/layout_custom_dialog.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/layout_documents.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/layout_search.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/layout_user_type.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/list_item_cell.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/service_instruction_item_cell.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/service_item_cell.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/subservice_list_item_cell.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/xserviceman_list_item_cell.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/menu/admin_bottom_navigation.xml">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/menu/bottom_navigation.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/menu/user_bottom_navigation.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/menu/xserviceman_bottom_navigation.xml">
           <value>
             <set />
           </value>
@@ -129,6 +694,66 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/Orphanage/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/Orphanage/app/src/main/AndroidManifest.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/Orphanage/app/src/main/java/com/orphanage/apps/SplashActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/Orphanage/app/src/main/java/com/orphanage/apps/model/OrphanageRegistrationModel.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/Orphanage/app/src/main/res/values/strings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/app/src/main/java/com/example/testapp/MainActivity.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/app/src/main/java/com/example/testapp/User.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/app/src/main/java/com/example/testapp/WeatherData.kt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/app/src/main/res/layout/activity_main.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/app/src/main/res/values/strings.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="E:/Test Applications/build.gradle">
           <value>
             <set />
           </value>
